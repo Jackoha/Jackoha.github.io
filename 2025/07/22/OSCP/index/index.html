@@ -1,0 +1,702 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-TW"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"複製成功(*^▽^*)","fail":"複製失敗 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    關於我從零滲透基礎到OSCP的心路歷程 |
+    
+    Jackoha&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="就在 2025&#x2F;07&#x2F;22 我成功取得了 OSCP+&#x2F;OSCP 的認證現在回頭看這趟過程真的是有種不可思議的感覺，這應該是我踏入資安圈以來的一大成就吧 初識OSCP從金盾結束之後，我感覺自己好像失去了明確目標，都閒閒沒事做，也不像金盾決賽的時候有那麼大的動力搞 CTF，於是某次在跟蛤蜊蝦聊天的時候，他就有提到 OSCP。我那時候對 OSCP 的印象就是超難又超貴，不過">
+<meta property="og:type" content="article">
+<meta property="og:title" content="關於我從零滲透基礎到OSCP的心路歷程">
+<meta property="og:url" content="http://example.com/2025/07/22/OSCP/index/index.html">
+<meta property="og:site_name" content="Jackoha&#39;s Blog">
+<meta property="og:description" content="就在 2025&#x2F;07&#x2F;22 我成功取得了 OSCP+&#x2F;OSCP 的認證現在回頭看這趟過程真的是有種不可思議的感覺，這應該是我踏入資安圈以來的一大成就吧 初識OSCP從金盾結束之後，我感覺自己好像失去了明確目標，都閒閒沒事做，也不像金盾決賽的時候有那麼大的動力搞 CTF，於是某次在跟蛤蜊蝦聊天的時候，他就有提到 OSCP。我那時候對 OSCP 的印象就是超難又超貴，不過">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jackoha.github.io/images/OSCP_plus_certified-1.png">
+<meta property="article:published_time" content="2025-07-21T17:38:11.000Z">
+<meta property="article:modified_time" content="2025-07-22T17:16:14.510Z">
+<meta property="article:author" content="Jackoha">
+<meta property="article:tag" content="OSCP">
+<meta property="article:tag" content="PT">
+<meta property="article:tag" content="心得">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackoha.github.io/images/OSCP_plus_certified-1.png">
+  
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">首頁</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">歸檔</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">關於</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/friend">友鏈</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img  fetchpriority="high" src="https://jackoha.github.io/images/OSCP_plus_certified.png" alt="關於我從零滲透基礎到OSCP的心路歷程">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">關於我從零滲透基礎到OSCP的心路歷程</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9D%E8%AD%98OSCP"><span class="toc-number">1.</span> <span class="toc-text">初識OSCP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%88%87OSCP%E7%9A%84%E6%84%9B%E6%81%A8%E6%83%85%E4%BB%87"><span class="toc-number">2.</span> <span class="toc-text">與OSCP的愛恨情仇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OSCP-%E7%B7%B4%E7%BF%92%E9%81%8E%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">OSCP 練習過程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSCP-%E8%80%83%E8%A9%A6%E6%BA%96%E5%82%99"><span class="toc-number">2.2.</span> <span class="toc-text">OSCP 考試準備</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exam-%E7%95%B6%E5%A4%A9"><span class="toc-number">2.3.</span> <span class="toc-text">Exam 當天</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%96%E5%BE%97-OSCP-%E7%9A%84%E5%BF%83%E5%BE%97%E4%BB%A5%E5%8F%8A%E4%B9%8B%E5%BE%8C%E7%9A%84%E8%A6%8F%E7%95%AB"><span class="toc-number">3.</span> <span class="toc-text">取得 OSCP 的心得以及之後的規畫</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">6</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-OSCP/index" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-07-21T17:38:11.000Z" itemprop="datePublished">2025-07-22</time>
+    <time style="display: none;" id="post-update-time">2025-07-23</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <p>就在 2025&#x2F;07&#x2F;22 我成功取得了 OSCP+&#x2F;OSCP 的認證<br>現在回頭看這趟過程真的是有種不可思議的感覺，這應該是我踏入資安圈以來的一大成就吧</p>
+<h1 id="初識OSCP"><a href="#初識OSCP" class="headerlink" title="初識OSCP"></a>初識OSCP</h1><p>從金盾結束之後，我感覺自己好像失去了明確目標，都閒閒沒事做，也不像金盾決賽的時候有那麼大的動力搞 CTF，於是某次在跟蛤蜊蝦聊天的時候，他就有提到 OSCP。<br>我那時候對 OSCP 的印象就是超難又超貴，不過我也認為自己不能再頹廢下去，經過了幾天的考慮後，我就決定要投入 OSCP，這對當時沒有任何一點滲透知識的我無疑是一場豪賭。<br>我當時買的是 learn one ，就是除了 OSCP 還有附贈 OSWP 跟 PG 之類的東西，其實東西還挺多的。<br>btw 我買的時候大概花了 2000 USD <del>而且還打過折 貴爛</del></p>
+<h1 id="與OSCP的愛恨情仇"><a href="#與OSCP的愛恨情仇" class="headerlink" title="與OSCP的愛恨情仇"></a>與OSCP的愛恨情仇</h1><h2 id="OSCP-練習過程"><a href="#OSCP-練習過程" class="headerlink" title="OSCP 練習過程"></a>OSCP 練習過程</h2><p>我開始讀OSCP是從今年一月開始，我自己是花了差不多4個月把OSCP的內容讀完，我認為裡面的內容還蠻完整的，而且不會有一些突然跳級的東西<br>只不過…<br>靶機就完全是另外一回事，一開始因為我沒有經驗，沒有完整的滲透流程想法，每個過程分開還知道要做什麼，合在一起就完全不知道要幹嘛，拿到靶機的時候真的很迷茫<br>不過這點隨著靶機打的量越來越多，對整個過程就會比較熟悉，但OSCP課程裡的靶機打一打就會發現一件神奇的事情<br>雖然OSCP的課程內容很有人性，但靶機並不是，有時候突然會有難度炸裂的題目，或是發現解法是用一些完全沒用過的工具，遇到這些題目直接嚇死<br>不過這也提醒我一件事，<strong>Exam 很有可能出現類似的東西</strong>，可能遇到一個沒看過的 cme 或插件就要去找相關的掃描工具跟 exploit<br>當然裡面也有一些很水的題目 <del>像是選擇題</del> 不過這種的就比較像是偏重觀念的內容<br>至於我認為裡面最困難的部分嗎 那肯定是修 exploit <del>你以為我要說AD嗎</del> 野生的 exploit 有時候會有各種神奇的問題，可能花最多的時間就在這了<br>反正這樣來來回回花了四個月，我自己是認為有明顯的進步，總算可以開始正式準備 exam 了</p>
+<h2 id="OSCP-考試準備"><a href="#OSCP-考試準備" class="headerlink" title="OSCP 考試準備"></a>OSCP 考試準備</h2><p>當初是預定把考試訂在暑假剛開始，經過各種考慮後最終定在 7&#x2F;19<br>在此之前要先做的就是整理好自己的筆記跟 checklist ，接著就是去打瘋狂打靶機<br>我自己的安排的有以下的部分 :</p>
+<ul>
+<li>PEN200 的challenge lab 0~2 跟 A,B,C</li>
+<li>Lainkusanagi OSCP Like 的推薦靶機<br><a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/18weuz_Eeynr6sXFQ87Cd5F0slOj9Z6rt/edit?gid=487240997#gid=487240997">https://docs.google.com/spreadsheets/d/18weuz_Eeynr6sXFQ87Cd5F0slOj9Z6rt/edit?gid=487240997#gid=487240997</a></li>
+<li>Proving Ground Practice (offsec 的)</li>
+<li>Tryhackme 跟 HTB 的免費靶機</li>
+</ul>
+<p>我自己是一邊打靶機一邊紀錄那些我沒看過的手法，然後把一些手法加入 checklist<br>還有去找一些工具可以讓自己操作起來會比較方便，offsec discord 群裡面的人也都會分享一些工具，應該會有不錯的收穫<br>這裡也丟一些我常用到的 :</p>
+<ul>
+<li>打穿內網大法 <a target="_blank" rel="noopener" href="https://github.com/nicocha30/ligolo-ng">ligolo-ng</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/int0x33/nc.exe/">nc.exe</a> 配合其他工具服用更佳</li>
+<li>各種 potato (如: <a target="_blank" rel="noopener" href="https://github.com/BeichenDream/GodPotato">GodPotato</a>,<a target="_blank" rel="noopener" href="https://github.com/tylerdotrar/SigmaPotato">SigmaPotato</a>)</li>
+<li>打AD的好夥伴 <a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/">BloodHound</a></li>
+</ul>
+<p>這樣打了一段時間，自己對滲透的整體流程也比之前熟悉很多<br>當然這樣還是會遇到一些可能花4~5個小時也解不出來的東西，這個時候不妨去看個 write-up<br>不要覺得這樣做自己不會進步，而是應該把手法學起來或反省自己這次哪裡沒有做到，確保下一次遇到類似的可以識別出來</p>
+<p>大概在六到七月這段期間，是我練習最緊湊的日子，只不過中間還遇到段考，我甚至是前幾天才讀的，幸好有 all pass<br>我認為在接近 exam 的時候心態還蠻重要的，在 exam 前打太多靶機只會讓自己太勞累，<del>雖然我就是這樣做的 還在螢幕前發瘋</del><br>這個時候可以出去走走、放鬆心情，去機廳打個 maimai 之類的<br>偷偷推我考試前都在玩什麼<a target="_blank" rel="noopener" href="https://store.steampowered.com/app/1584090/__Touhou_Mystias_Izakaya/?l=tchinese">secret</a><br>還有在考試前幾天就不要再碰滲透了，好好放鬆心情去面對 exam<br>考試前也要熟讀 exam guide，畢竟 exam 的規範還挺嚴格的，建議把整個 exam 流程看過一遍，我也不想因為這種意外失去資格</p>
+<h2 id="Exam-當天"><a href="#Exam-當天" class="headerlink" title="Exam 當天"></a>Exam 當天</h2><p>我把考試訂在早上十點，但因為太興奮所以早上七點就起來了，<del>所以我去打了 CS</del><br>考試要在前15分鐘去平台上登入，上去就先跟考官打個招呼<br>然後就開始檢查流程，首先會檢查護照，再來就是拿鏡頭去環繞整個房間，還有提醒說房間內不能放手機之類的<br>其他詳細的過程我就不多說，我就放在<a target="_blank" rel="noopener" href="https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide">這裡</a>，有興趣的可以去看<br>考試時間到就寄了一封 email 過來，裡面有靶機的 ip 跟 vpn connect pack<br>準備好環境跟考官通知一聲後，考試就正式開始了</p>
+<p>這裡大概說一下我整場考試的流程</p>
+<p>我一開始先選擇了 AD 去打<br>第一台機器有給 credential，提權我大概花了 10 分鐘<br>接下來花了半小時到內網第二台機器，過了大概一小時我成功在第二台機器提權，這樣就已經有 20 分了<br>這時的進展非常順利，但在這台翻了一下都沒找到東西，我決定先去休息一下，沒想到接下來就是痛苦的開始了</p>
+<p>休息完後，我繼續嘗試進到 Domain Controller，但翻了兩三個小時都沒收穫<br>而且我有些工具還不能跑，我覺得這時無計可施，所以就跑去打 stand-alone 了</p>
+<p>這個時候我每台靶機都有碰，每台也都有一定的進展，但進度就這樣停在這了<br>這時的資訊量應該是夠我拿到 initial access 的，我也認為我每一台都有明確的攻擊向量，但卻遲遲打不進去<br>中間有稍微去休息一下，回來之後卻還是打不進去，我就維持這樣的狀態一路到了九點<br>這時候我已經有點崩潰了，整個精神狀台很差，畢竟考試過了快一半的時間，我離及格線還有 50 分</p>
+<p>這時候我就先去休息，我也跟蛤蜊蝦約在這個時間互相匯報狀況<br>互相討論了一下後，我有了新的想法，接著就回去繼續奮鬥了</p>
+<p>我這次重新 revert 了機器，沒想到原本不能用的工具現在就能用了<br>我也藉此取得了線索，在這個時候取得了 domain admin，拿到 AD 的所有分數<br>這時候我的分數是 40 分，也就是我至少要提權一台 stand-alone 或拿到每一台的立足點</p>
+<p>這個時候已經過了半夜 12 點，為了避免精神不濟，我準備了一瓶紅茶在旁邊<br>到了半夜 3 點我用一種近乎通靈的方式終於取得了其中一台的立足點<br>距離及格線還有 20 分，但考試時間也只剩 7 小時，這時我感到很焦慮</p>
+<p>就這樣到了早上 5 點，我對提權一無所獲<br>老實說，這個時候我都不太相信這次考試會通過了<br>經過了一下子的休息後，我去看了其他台的 stand-alone</p>
+<p><strong>沒想到這個時候奇蹟發生了</strong><br>我找到了一個我之前不知為何沒發現的線索，就這樣到了早上七點<br>我成功取得了立足點，離考試及格線只差最後的 10 分<br>這時我就像受眷顧般的找到超簡單的提權方式，我花了不到5分鐘就提權了<br>就在這時，我也意識到一件非常重要的事情，我已經到達及格線了，整整 21 小時的壓力就這樣釋放出來了</p>
+<p>我再次確認我有將我需要的資料以及截圖後，我就去跟考官通知要結束考試了<br>可能是我結束考試時只剩兩小時多，我真心有種鬆了一口氣的感覺<br>接下來就只剩寫報告了，不過這比起考試時的那種壓抑感已經好很多了<br>這個是我寫報告的<a target="_blank" rel="noopener" href="https://github.com/noraj/OSCP-Exam-Report-Template-Markdown">模板</a>，供大家參考</p>
+<h1 id="取得-OSCP-的心得以及之後的規畫"><a href="#取得-OSCP-的心得以及之後的規畫" class="headerlink" title="取得 OSCP 的心得以及之後的規畫"></a>取得 OSCP 的心得以及之後的規畫</h1><p>我在報告繳交出去隔兩天後，offsec 就寄了認證的信給我了，非常好效率<br>其實這次考試的後半過程我都是很崩潰的狀態，平常練習challenge lab 時的時間是 10 小時上下，但這次直接到了 21 小時<br>這對身體跟心靈都是蠻大的折磨，我是不想要再體驗一次這種狀況了，看來無論如何總會發生意外的<br>不過我也真的從這次經驗學到挺多的，保持好心態跟好好應用能用的資源真的蠻重要的<br>這次真的是我考過最緊張的考試，會考跟之前參加過的競賽都沒這麼可怕，相信我之後在面對其他考試應該有更強的抗壓性</p>
+<p>之後我也有預計要考其他 offsec 的證照，像 OSWP 我應該會安排在九月初，之後也想考看看 OSEP<br>然後才剛經歷完這樣的滲透磨練，我最近就不太想碰了，希望有人能帶我去打 CTF<br>還有接下來很快就是 AIS3，看來我也要體驗一次挖洞地獄了，CX330 跟 dk 拜託帶我</p>
+<p><strong>最後再丟上我的證照 祝各位想考OSCP的人都能通過</strong><br><img src="https://jackoha.github.io/images/OSCP_plus_certified-1.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/OSCP/" rel="tag">OSCP</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/PT/" rel="tag">PT</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E5%BF%83%E5%BE%97/" rel="tag">心得</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="https://jackoha.github.io/images/NHNC.png" data-sizes="auto" alt="NHNC 2025 official writeup" class="lazyload">
+      
+      <a href="/2025/07/07/NHNC-official-writeup/NHNC-official-writeup/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          NHNC 2025 official writeup
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Jackoha
+    </div>
+    
+      <div>
+        基於&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        4.5k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        00:17
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">總訪問量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">總訪客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9D%E8%AD%98OSCP"><span class="toc-number">1.</span> <span class="toc-text">初識OSCP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%88%87OSCP%E7%9A%84%E6%84%9B%E6%81%A8%E6%83%85%E4%BB%87"><span class="toc-number">2.</span> <span class="toc-text">與OSCP的愛恨情仇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OSCP-%E7%B7%B4%E7%BF%92%E9%81%8E%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">OSCP 練習過程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSCP-%E8%80%83%E8%A9%A6%E6%BA%96%E5%82%99"><span class="toc-number">2.2.</span> <span class="toc-text">OSCP 考試準備</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exam-%E7%95%B6%E5%A4%A9"><span class="toc-number">2.3.</span> <span class="toc-text">Exam 當天</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%96%E5%BE%97-OSCP-%E7%9A%84%E5%BF%83%E5%BE%97%E4%BB%A5%E5%8F%8A%E4%B9%8B%E5%BE%8C%E7%9A%84%E8%A6%8F%E7%95%AB"><span class="toc-number">3.</span> <span class="toc-text">取得 OSCP 的心得以及之後的規畫</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">6</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Jackoha",
+          title: "關於我從零滲透基礎到OSCP的心路歷程",
+          url: "http://example.com/2025/07/22/OSCP/index/",
+          excerpt: "",
+          description: "",
+          stripContent: "就在 2025&amp;#x2F;07&amp;#x2F;22 我成功取得了 OSCP+&amp;#x2F;OSCP 的認證現在回頭看這趟過程真的是有種不可思議的感覺，這應該是我踏入資安圈以來的一大成就吧 初識OSCP從金盾結束之後，我感覺自己好像失去了明確目標，都閒閒沒事做，也不像金盾決賽的時候有那麼大的動力搞 CTF，於是某次在跟蛤蜊蝦聊天的時候，他就有提到 OSCP。我那時候對 OSCP 的印象就是超難又超貴，不過我也認為自己不能再頹廢下去，經過了幾天的考慮後，我就決定要投入 OSCP，這對當時沒有任何一點滲透知",
+          date: "Tue Jul 22 2025 01:38:11 GMT+0800",
+          updated: "Wed Jul 23 2025 01:16:14 GMT+0800",
+          cover: "https://jackoha.github.io/images/OSCP_plus_certified.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.6.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+

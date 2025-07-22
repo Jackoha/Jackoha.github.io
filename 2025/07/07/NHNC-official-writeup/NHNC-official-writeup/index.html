@@ -40,8 +40,10 @@
 <meta property="og:description" content="前言再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目經過多天的思考就出了一題神奇的題目希望大家會喜歡 :)應該不會太通靈吧 FRSA先看個 source code 12345678910111213from Crypto.Util.number import *from random import *p &#x3D; getStrongPrime(1024)q &#x3D; get">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2025-07-07T09:26:11.000Z">
-<meta property="article:modified_time" content="2025-07-07T14:28:30.815Z">
+<meta property="article:modified_time" content="2025-07-22T17:16:12.580Z">
 <meta property="article:author" content="Jackoha">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="write-up">
 <meta name="twitter:card" content="summary">
   
   
@@ -164,16 +166,8 @@
 </div>
 <header id="header">
   
-    
-      
-        <picture>
-          
-        </picture>
-        
-          <img  fetchpriority="high" src="/images/banner.webp" alt="NHNC 2025 official writeup">
-        
-      
-    
+    <picture></picture>
+    <img  fetchpriority="high" src="https://jackoha.github.io/images/NHNC.png" alt="NHNC 2025 official writeup">
   
   <div id="header-outer">
     <div id="header-title">
@@ -221,7 +215,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">3</div>
   </div>
   <div class="sidebar-state-category">
     <div>分類</div>
@@ -229,7 +223,7 @@
   </div>
   <div class="sidebar-state-tag">
     <div>標籤</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">6</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -298,7 +292,7 @@
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
     <time datetime="2025-07-07T09:26:11.000Z" itemprop="datePublished">2025-07-07</time>
-    <time style="display: none;" id="post-update-time">2025-07-07</time>
+    <time style="display: none;" id="post-update-time">2025-07-23</time>
   </span>
 </div>
 
@@ -341,20 +335,33 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/write-up/" rel="tag">write-up</a></li></ul>
+
 
     </footer>
   </div>
   
   <nav id="article-nav" data-aos="fade-up">
     
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          <img data-src="https://jackoha.github.io/images/OSCP_plus_certified.png" data-sizes="auto" alt="關於我從零滲透基礎到OSCP的心路歷程" class="lazyload">
+        
+        <a href="/2025/07/22/OSCP/index/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            關於我從零滲透基礎到OSCP的心路歷程
+          
+        </h3>
+      </div>
+    
     
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        
-        
-          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="Spell-Whisperer_Writeup" class="lazyload">
-        
+        <img data-src="https://jackoha.github.io/images/spell-whisper.png" data-sizes="auto" alt="Spell-Whisperer_Writeup" class="lazyload">
       
       <a href="/2025/04/12/Spell-Whisperer-Writeup/index/"></a>
       <div class="article-nav-caption">Older</div>
@@ -400,10 +407,10 @@
     
       <div>
         <span class="icon-brush"></span>
-        1.9k
+        4.5k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        00:08
+        00:17
       </div>
     
     
@@ -449,7 +456,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">3</div>
   </div>
   <div class="sidebar-state-category">
     <div>分類</div>
@@ -457,7 +464,7 @@
   </div>
   <div class="sidebar-state-tag">
     <div>標籤</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">6</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -589,8 +596,8 @@
           description: "",
           stripContent: "前言再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目經過多天的思考就出了一題神奇的題目希望大家會喜歡 :)應該不會太通靈吧 FRSA先看個 source code 12345678910111213from Crypto.Util.number import *from random import *p = getStrongPrime(1024)q = getStrongPrime(1024)n = p*qe = randrange(2**512,2**10",
           date: "Mon Jul 07 2025 17:26:11 GMT+0800",
-          updated: "Mon Jul 07 2025 22:28:30 GMT+0800",
-          cover: "/images/banner.webp",
+          updated: "Wed Jul 23 2025 01:16:12 GMT+0800",
+          cover: "https://jackoha.github.io/images/NHNC.png",
         };
       </script>
        
