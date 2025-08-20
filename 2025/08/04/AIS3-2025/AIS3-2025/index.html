@@ -1,0 +1,712 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-TW"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"複製成功(*^▽^*)","fail":"複製失敗 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    AIS3 的各種大小事 |
+    
+    Jackoha&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="前言其實這篇在 AIS3 結束之後就該寫了，只是我超偷懶加上還有 AIS3 junior，所以就一起寫了 DAY -1這次在 pre-exam 拿到第 49 名 可惡的 AI 大賽然後這次有 4 個組別可以選  A組 : 軟體、網頁及IoT安全 B組 : 典範轉移:AI時代的情資運用及防禦 C組 : 跨域資訊安全(金融,物流,電信) D組 : 進階資安攻防競技(CTF)  我自己是選了A組，因為聽">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIS3 的各種大小事">
+<meta property="og:url" content="http://example.com/2025/08/04/AIS3-2025/AIS3-2025/index.html">
+<meta property="og:site_name" content="Jackoha&#39;s Blog">
+<meta property="og:description" content="前言其實這篇在 AIS3 結束之後就該寫了，只是我超偷懶加上還有 AIS3 junior，所以就一起寫了 DAY -1這次在 pre-exam 拿到第 49 名 可惡的 AI 大賽然後這次有 4 個組別可以選  A組 : 軟體、網頁及IoT安全 B組 : 典範轉移:AI時代的情資運用及防禦 C組 : 跨域資訊安全(金融,物流,電信) D組 : 進階資安攻防競技(CTF)  我自己是選了A組，因為聽">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jackoha.github.io/images/AIS3_sign.png">
+<meta property="og:image" content="https://jackoha.github.io/images/fumo_with_AIS3.png">
+<meta property="article:published_time" content="2025-08-04T15:52:44.000Z">
+<meta property="article:modified_time" content="2025-08-20T19:06:00.921Z">
+<meta property="article:author" content="Jackoha">
+<meta property="article:tag" content="心得">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackoha.github.io/images/AIS3_sign.png">
+  
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">首頁</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">歸檔</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">關於</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/friend">友鏈</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/banner.webp" alt="AIS3 的各種大小事">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">AIS3 的各種大小事</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-1"><span class="toc-number">2.</span> <span class="toc-text">DAY -1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-0"><span class="toc-number">3.</span> <span class="toc-text">DAY 0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-1-1"><span class="toc-number">4.</span> <span class="toc-text">DAY 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-2"><span class="toc-number">5.</span> <span class="toc-text">DAY 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-3"><span class="toc-number">6.</span> <span class="toc-text">DAY 3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-4"><span class="toc-number">7.</span> <span class="toc-text">DAY 4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-5"><span class="toc-number">8.</span> <span class="toc-text">DAY 5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-6"><span class="toc-number">9.</span> <span class="toc-text">DAY 6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-7"><span class="toc-number">10.</span> <span class="toc-text">DAY 7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AIS3-junior"><span class="toc-number">11.</span> <span class="toc-text">AIS3 junior</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">12.</span> <span class="toc-text">結語</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">6</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-AIS3-2025/AIS3-2025" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-08-04T15:52:44.000Z" itemprop="datePublished">2025-08-04</time>
+    <time style="display: none;" id="post-update-time">2025-08-21</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>其實這篇在 AIS3 結束之後就該寫了，只是我超偷懶<br>加上還有 AIS3 junior，所以就一起寫了</p>
+<h1 id="DAY-1"><a href="#DAY-1" class="headerlink" title="DAY -1"></a>DAY -1</h1><p>這次在 pre-exam 拿到第 49 名 <del>可惡的 AI 大賽</del><br>然後這次有 4 個組別可以選</p>
+<ul>
+<li>A組 : 軟體、網頁及IoT安全</li>
+<li>B組 : 典範轉移:AI時代的情資運用及防禦</li>
+<li>C組 : 跨域資訊安全(金融,物流,電信)</li>
+<li>D組 : 進階資安攻防競技(CTF)</li>
+</ul>
+<p>我自己是選了A組，因為聽說要選自己比較擅長的領域，我想說自己 CTF 不強，又不會 AI，C組也不知道在幹嘛，所以就選了 A組<br>但那個時候的我沒想到，這個組別可以把正常人搞到沒生活，加上今年特別可怕 (如果有聽說今年狀況應該都知道)<br>不過我那時候並不擔心，因為我覺得 CX330 超強<br>這裡順便說一下隊友是誰</p>
+<ul>
+<li>CX330 aka 成大資安社社長</li>
+<li>dkri3c1 鑑識大師</li>
+<li>DD pwn神</li>
+</ul>
+<h1 id="DAY-0"><a href="#DAY-0" class="headerlink" title="DAY 0"></a>DAY 0</h1><p>這天我一大早就起來開始準備去新竹<br>什麼? 你問我為什麼報到時間在五點，我卻要那麼早起<br><del>那當然是去打 mai 阿，竹喵我來了</del><br>反正吃完飯之後就跑去新竹，然後跟 ICEDTEA 的去打 mai<br>五點多之後就跑去交大報到，接著過去宿舍，去跟組員認識一下<br>雖然我只有一個組員不認識，而且我隊友都是 junior 助教 <del>我明年也要報助教</del><br>這天也順便討論說專題要弄什麼，畢竟之前聽說 AIS3 的專題很可怕<br>這天討論完就把專題方向定在挖 0-day了<br>不過我自己沒有太多經驗，那個時候感覺蠻可怕的<br>順帶一題，這天因為不想睡木板，直接睡在地下室</p>
+<h1 id="DAY-1-1"><a href="#DAY-1-1" class="headerlink" title="DAY 1"></a>DAY 1</h1><p>這天早上起來就先去便利商店買份早餐<br>聽 dk 說這整個禮拜的早餐都要吃便利商店了<br>接著就馬上衝去會場報到，前面就都是聽一些介紹<br>接著就是馬老師超硬的 Windows kernel，不過中間有一些滲透相關的東西，所以還算聽得懂<br>這時候我去看了一下才發現今年怎麼那麼多 kernel 相關的東西，看來是 pwn 仔的勝利<br>不過我相信認真聽基本上不會有什麼大問題<br>中午去蹭了交流會的 subway 來吃，不用付錢 好欸<br>下午有 AI 跟 kernel 的課，但 AI 我是聽不太懂，不過聽某人說共筆都在亂寫<br>kernel 的話就是在弄出自己的 kernel，不過我全程也只有都在把指令複製貼上而已<br>晚餐的話…<br>其實我已經忘了那天吃什麼，好像是學生餐廳?<br>不過這一整周的經驗下來，我大力推薦小木屋鬆餅，離會場超近，又不會太貴 <del>我連吃了3天</del><br>接下來還有破冰遊戲，不過我整場都在水<br>晚上就是挖洞 挖洞 挖洞 挖洞 挖洞 挖洞 挖洞 挖洞 挖洞 挖洞<br>挖累了就直接睡覺，直接睡在地下室 (沒錯，第二天了)</p>
+<h1 id="DAY-2"><a href="#DAY-2" class="headerlink" title="DAY 2"></a>DAY 2</h1><p>真是清新的早晨，今天的我也在地下室醒來了<br>這天早上的課我其實沒有太大的興趣，所以就等著吃午餐加挖洞<br>這裡也要順便說一下，午餐給的時間超少，每次都超趕<br>下午的紅隊滲透的課程蠻有趣的，我自認學到了不少的東西，我也是第一次看到 <a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial">ysoserial</a><br>也是在這節課的時候，CX 去挖了某個 router 的洞還被他找到 command injection<br>接下來的課就沒什麼印象，kernel 好難 :((((<br>晚上有一個產業鏈結交流會，反正就是給一些公司宣傳用，也在那邊遇到很多大佬，還順便去要了簽名</p>
+<p><img src="https://jackoha.github.io/images/AIS3_sign.png"></p>
+<p>這天晚上助教有來檢查各組進度<br>輪到我們的時候助教看了一下，pwn2ooown 突然超大聲來了一個恭喜<br>我們挖到了一個超級水洞，直接被助教們 reject 掉，再挖一個 0-day<br>不過這個時候方向已經蠻明確的，原本還想說挖不到就去做工具或插件<br>然後今天沒有睡地下室，但是木板床好硬 ᗜ˰ᗜ</p>
+<blockquote>
+<p>因為 CX330 一直在 AIS3 大力推薦 binary ninja 所以我也來幫他宣傳一下 <del>雖然我都沒用</del></p>
+</blockquote>
+<h1 id="DAY-3"><a href="#DAY-3" class="headerlink" title="DAY 3"></a>DAY 3</h1><p>今天的早餐又是便利商店，好ㄟ<br>上午認真聽的課只有 web 的部分<br>接下來我就跟蛤蜊蝦跑去吃漢堡王了，但是那裡超遠，不推薦去<br>結果這個時候 CX 又挖到了一個 command injection，這個時候就剩環境架起來的問題了<br>下午又又又双叒叕有 kernel 的課，我真的被 kernel 的課給搞死，真的聽不太懂<br>最後晚上的時候有 trapa CEO 的演講<br>老實說，這場演講我收穫蠻多的，我也覺得自己其實蠻偷懶的<br>自己 CTF 退步都歸在因為考證照太忙這點，我覺得自己超級糟糕<br>所以我自己打算之後要認真打 CTF，至少要練到之後打 HITCON 能有多一點的貢獻<br>回到宿舍後，就是全組都在架環境，但那時候不知道這噁心的東西會搞我們超久</p>
+<h1 id="DAY-4"><a href="#DAY-4" class="headerlink" title="DAY 4"></a>DAY 4</h1><p>今天早餐又是便利商店…嗎?<br>不，我今天直接沒吃就直接過去了 <del>凌晨四點睡真開心</del><br>這天有一整個早上的 windows kernel，雖然很難，但我認為蠻有趣的<br>順便說一下，我那天還跑錯場次 + 找不到教室在哪<br>急急忙忙的上完後就跑去吃了小木屋鬆餅，我後來還被那邊的店員認出來，是因為我的鬍子嗎?<br>下午有橘子的課，這場我蠻期待的，我也沒有見過本人<br>這裡再次大推橘子的課，上起來非常有趣，他也有展示一些很酷的東西，我自己是上的蠻開心的<br>最後晚上有專題討論，但我們整組基本上都在架環境，架到專題討論時間都結束了都還沒好<br>結果 dk 在半夜用 firmAE 架起來了，而且他只花了 10 分鐘<br>然後接下來就剩我把 exploit 弄好，攻擊方式也只是簡單的 command injection bypass blacklist</p>
+<blockquote>
+<p>這裡順便推薦一下 <a target="_blank" rel="noopener" href="https://github.com/pr0v3rbs/FirmAE">firmAE</a> 非常好用</p>
+</blockquote>
+<h1 id="DAY-5"><a href="#DAY-5" class="headerlink" title="DAY 5"></a>DAY 5</h1><p>早上起來隨便買了早餐來吃，就跑過去了，今天要瘋狂趕專題<br>這天早上就在弄 exploit + debug<br>弄到差不多下午就把整個 exploit 給弄好了，就是可以簡單打 revshell 的東西<br>這天一整個超級放鬆，比起前面幾天的挖洞還有架環境好很多<br>今天吃爆小木屋鬆餅 + 晚餐跑去外面吃好料的<br>最後晚上的時候 CX 問說要不要看有什麼其他版本的也有同樣的洞<br>檢查完過後，還有另外兩個版本也有，之後就可以一併報</p>
+<h1 id="DAY-6"><a href="#DAY-6" class="headerlink" title="DAY 6"></a>DAY 6</h1><p>這天就是聽聽別人專題還有弄簡報<br>這裡說個小趣事，404 前一天問我要不要測他們的 prompt injection 防禦<br>然後我把我之前用過的 payload 砸下去，他整個卡住，然後就把 instruction 全部噴出來了<br>這天晚上想說要不要把 exploit 改的有趣一點<br>我們就變成把 router 首頁改成 pwned by 每個組員 + 好駭客的圖片還有打 revshell 回來<br>最後經過助教評價還有各種修改，我們的簡報一整個看起來超級諧咖</p>
+<h1 id="DAY-7"><a href="#DAY-7" class="headerlink" title="DAY 7"></a>DAY 7</h1><p>這天，我沒有睡覺，到底是為什麼呢???<br>我們半夜為了升級 CVSS，而且那個時候有想到說前面發 POST request 是不用傳 session 的<br>所以可以不需要 admin 直接訪問到內部的頁面，經過 CX 逆向確定後，我們成功讓這個洞變成 critical 了!!!<br>這天報告的時候，CX 的台風真的超好，我在講的時候也只是按照前一天準備的講，沒耍什麼新花樣<br>DD 在我們報告前還把之前 qemu 架不起來的東西修好，補了整個簡報的完整度<br>dk 講起來的時候也都蠻有效果的，隊友真的好扛<br>不過雖然這次我覺得我們這組弄得夠完整，不過我認為還是比不上其他組<br>今年真的超可怕，TomCat RCE, 10 個 0-day 各種噁心的東西都出來了，所以我不認為有機會拿最佳專題<br>不過出乎意料的是還真的被我們拿到了，當下喊到我們這組時我蠻驚訝的，但能拿最佳專題真的蠻開心的<br>再次感謝隊友的各種幫忙跟努力，你們真的超扛<br>這裡附上最佳專題跟 fumo 的合照</p>
+<p><img src="https://jackoha.github.io/images/fumo_with_AIS3.png"></p>
+<blockquote>
+<p>順帶一提，我在那幾天看到 steam 特價了一個<a target="_blank" rel="noopener" href="https://store.steampowered.com/app/2873080/_/">好玩遊戲</a>，我睡前都在玩</p>
+</blockquote>
+<h1 id="AIS3-junior"><a href="#AIS3-junior" class="headerlink" title="AIS3 junior"></a>AIS3 junior</h1><p>其實這次去 junior 我是帶著一種去玩的心情過去的<br>但我只能說那裡也是多災多難，不過跟 AIS3 是不同層面的<br>一個會讓你體會什麼叫累的值得，另外一個是非常不值得的<br>不過這些也都還好，但不負責任又沒禮貌這點我真的蠻受不了的<br>事情都過去了，那這些也就算了，其他隊友都還是蠻扛的，而且我自己也有做錯的地方<br><strong>我在這裡向我組員道歉</strong><br>最後還有助教們都很用心 <del>最愛你了 SAMMMMMM</del><br>pwn2ooown 大哥擔任美食公道伯帶我們去吃好料的，還請一杯飲料，好ㄟ<br>我自己明年應該會想投 junior 助教，希望 AIS3 官方不要因為我幹的蠢事把我 reject<br><del>我去 HITCON 還被 AIS3 的 staff 認出來 超尷尬的</del><br>反正 AIS3 的整個行程差不多就醬</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>AIS3 整體還是蠻充實的，我自己是收穫滿滿<br>推薦給每個想去爆肝的，這裡一定會滿足你的每個需求<br>順便說一下， CX 有把我們發現的洞拿去投 CVE，之後有消息在補，我應該會再發一篇 blog<br>這樣是不是可以說我沒有 my first ctf 但是在 AIS3 拿到 my first cve<br>話說有拿我 fumo 上台的都拿了最佳專題 <del>這是一種東方神秘力量嗎</del></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E5%BF%83%E5%BE%97/" rel="tag">心得</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="https://jackoha.github.io/images/OSCP_plus_certified.png" data-sizes="auto" alt="關於我從零滲透基礎到OSCP的心路歷程" class="lazyload">
+      
+      <a href="/2025/07/22/OSCP/index/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          關於我從零滲透基礎到OSCP的心路歷程
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Jackoha
+    </div>
+    
+      <div>
+        基於&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        7.2k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        00:26
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">總訪問量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">總訪客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-1"><span class="toc-number">2.</span> <span class="toc-text">DAY -1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-0"><span class="toc-number">3.</span> <span class="toc-text">DAY 0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-1-1"><span class="toc-number">4.</span> <span class="toc-text">DAY 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-2"><span class="toc-number">5.</span> <span class="toc-text">DAY 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-3"><span class="toc-number">6.</span> <span class="toc-text">DAY 3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-4"><span class="toc-number">7.</span> <span class="toc-text">DAY 4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-5"><span class="toc-number">8.</span> <span class="toc-text">DAY 5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-6"><span class="toc-number">9.</span> <span class="toc-text">DAY 6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DAY-7"><span class="toc-number">10.</span> <span class="toc-text">DAY 7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AIS3-junior"><span class="toc-number">11.</span> <span class="toc-text">AIS3 junior</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">12.</span> <span class="toc-text">結語</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">6</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Jackoha",
+          title: "AIS3 的各種大小事",
+          url: "http://example.com/2025/08/04/AIS3-2025/AIS3-2025/",
+          excerpt: "",
+          description: "",
+          stripContent: "前言其實這篇在 AIS3 結束之後就該寫了，只是我超偷懶加上還有 AIS3 junior，所以就一起寫了 DAY -1這次在 pre-exam 拿到第 49 名 可惡的 AI 大賽然後這次有 4 個組別可以選  A組 : 軟體、網頁及IoT安全 B組 : 典範轉移:AI時代的情資運用及防禦 C組 : 跨域資訊安全(金融,物流,電信) D組 : 進階資安攻防競技(CTF)  我自己是選了A組，因為聽說要選自己比較擅長的領域，我想說自己 CTF 不強，又不會 AI，C組也不知道在幹嘛，所以就選了 A",
+          date: "Mon Aug 04 2025 23:52:44 GMT+0800",
+          updated: "Thu Aug 21 2025 03:06:00 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.6.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
