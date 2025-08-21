@@ -14,14 +14,17 @@
 
   
 
-  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"複製成功(*^▽^*)","fail":"複製失敗 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本部落格所有文章除特別聲明外，均採用 BY-NC-SA 授權協議。轉載請註明出處！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
   
   <title>
     
     Jackoha&#39;s Blog
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
   
     <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   
@@ -48,7 +51,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
   
   
   
@@ -59,7 +62,7 @@
   
   
     
-<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css" integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous">
 
   
   
@@ -73,7 +76,7 @@
     <div class="loading-left-bg loading-bg"></div>
     <div class="loading-right-bg loading-bg"></div>
     <div class="spinner-box">
-      <div class="loading-taichi">
+      <div class="loading-taichi rotate">
         
           <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
             <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
@@ -82,7 +85,11 @@
           </svg>
         
       </div>
-      <div class="loading-word">少女祈祷中...</div>
+      
+      
+        
+      
+      <div class="loading-word">少女祈禱中...</div>
     </div>
   </div>
   </div>
@@ -113,6 +120,7 @@
 
 <div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
 </div>
+<div id="heatmap-tooltip"></div>
 
 
     <div id="container">
@@ -123,28 +131,36 @@
       
         <span class="main-nav-link-wrap">
           <div class="main-nav-icon icon rotate">
-            &#xe62b;
+             
+              &#xe62b;
+             
           </div>
           <a class="main-nav-link" href="/">首頁</a>
         </span>
       
         <span class="main-nav-link-wrap">
           <div class="main-nav-icon icon rotate">
-            &#xe62b;
+             
+              &#xe62b;
+             
           </div>
           <a class="main-nav-link" href="/archives">歸檔</a>
         </span>
       
         <span class="main-nav-link-wrap">
           <div class="main-nav-icon icon rotate">
-            &#xe62b;
+             
+              &#xe62b;
+             
           </div>
           <a class="main-nav-link" href="/about">關於</a>
         </span>
       
         <span class="main-nav-link-wrap">
           <div class="main-nav-icon icon rotate">
-            &#xe62b;
+             
+              &#xe62b;
+             
           </div>
           <a class="main-nav-link" href="/friend">友鏈</a>
         </span>
@@ -226,7 +242,9 @@
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">首頁</div>
       </div>
@@ -234,7 +252,9 @@
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">歸檔</div>
       </div>
@@ -242,7 +262,9 @@
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">關於</div>
       </div>
@@ -250,7 +272,9 @@
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">友鏈</div>
       </div>
@@ -412,8 +436,6 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
 
 </section>
         </div>
-        
-        
         <footer id="footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -422,7 +444,11 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
     
     <div>
       <span class="icon-copyright"></span>
-      2020-2025
+      
+      
+      
+        2020-2025
+      
       <span class="footer-info-sep rotate"></span>
       Jackoha
     </div>
@@ -440,6 +466,7 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
         <span class="icon-coffee"></span>
         00:26
       </div>
+    
     
     
     
@@ -494,7 +521,9 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">首頁</div>
       </div>
@@ -502,7 +531,9 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">歸檔</div>
       </div>
@@ -510,7 +541,9 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">關於</div>
       </div>
@@ -518,7 +551,9 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
       <div class="sidebar-menu-link-wrap">
         <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
         <div class="sidebar-menu-icon icon rotate">
-          &#xe62b;
+          
+            &#xe62b;
+          
         </div>
         <div class="sidebar-menu-link">友鏈</div>
       </div>
@@ -532,6 +567,8 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
 </nav>
 
     </div>
+    
+    
     
     
 <script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
@@ -613,7 +650,7 @@ Twilight這題開始我就有去找 payload我的 payload 主要是從底下這�
   \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
                                                   
 `,'color: #ff5252;')
-    console.log('%c Theme.Reimu v' + '1.6.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.9.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
   </script>
   
 
