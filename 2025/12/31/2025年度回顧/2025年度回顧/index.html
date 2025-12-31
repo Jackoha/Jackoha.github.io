@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本部落格所有文章除特別聲明外，均採用 BY-NC-SA 授權協議。轉載請註明出處！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
   
   <title>
-    NHNC 2025 official writeup |
+    2025年度回顧 |
     
     Jackoha&#39;s Blog
   </title>
@@ -35,18 +35,16 @@
 
   
   
-    <meta name="description" content="前言再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目經過多天的思考就出了一題神奇的題目希望大家會喜歡 :)應該不會太通靈吧 FRSA先看個 source code 12345678910111213from Crypto.Util.number import *from random import *p &#x3D; getStrongPrime(1024)q &#x3D; get">
+    <meta name="description" content="大家好像都在寫回顧，那我也跟著寫一下好了這篇就當作整理今年發生什麼事好了，雖然我快忘光了 一月 打完金盾暫時想不到要幹嘛，所以就去買了 OSCP，寒假剛好可以爆讀，然後沒過多久就發現 EOF 被刷了  二月 這個月好像沒有特別的事情? 有點忘記了  三月 去 SITCON 幫忙 THJCC 擺攤 + 聽了一些神奇的議程，順便認識了一些人，像是 kohiro 跟 chilin後來還去打了 CX330">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NHNC 2025 official writeup">
-<meta property="og:url" content="http://example.com/2025/07/07/NHNC-official-writeup/NHNC-official-writeup/index.html">
+<meta property="og:title" content="2025年度回顧">
+<meta property="og:url" content="http://example.com/2025/12/31/2025%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/2025%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/index.html">
 <meta property="og:site_name" content="Jackoha&#39;s Blog">
-<meta property="og:description" content="前言再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目經過多天的思考就出了一題神奇的題目希望大家會喜歡 :)應該不會太通靈吧 FRSA先看個 source code 12345678910111213from Crypto.Util.number import *from random import *p &#x3D; getStrongPrime(1024)q &#x3D; get">
+<meta property="og:description" content="大家好像都在寫回顧，那我也跟著寫一下好了這篇就當作整理今年發生什麼事好了，雖然我快忘光了 一月 打完金盾暫時想不到要幹嘛，所以就去買了 OSCP，寒假剛好可以爆讀，然後沒過多久就發現 EOF 被刷了  二月 這個月好像沒有特別的事情? 有點忘記了  三月 去 SITCON 幫忙 THJCC 擺攤 + 聽了一些神奇的議程，順便認識了一些人，像是 kohiro 跟 chilin後來還去打了 CX330">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2025-07-07T09:26:11.000Z">
-<meta property="article:modified_time" content="2025-07-22T17:16:12.580Z">
+<meta property="article:published_time" content="2025-12-31T11:44:38.000Z">
+<meta property="article:modified_time" content="2025-12-31T15:01:21.593Z">
 <meta property="article:author" content="Jackoha">
-<meta property="article:tag" content="CTF">
-<meta property="article:tag" content="write-up">
 <meta name="twitter:card" content="summary">
   
   
@@ -183,7 +181,7 @@
 <header id="header">
   
     <picture></picture>
-    <img  fetchpriority="high" src="https://jackoha.github.io/images/NHNC.png" alt="NHNC 2025 official writeup">
+    <img  fetchpriority="high" src="https://jackoha.github.io/images/manosoba.png" alt="2025年度回顧">
   
   <div id="header-outer">
     <div id="header-title">
@@ -191,7 +189,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">NHNC 2025 official writeup</h1>
+            <h1 data-aos="slide-up">2025年度回顧</h1>
           </a>
         
       
@@ -218,7 +216,7 @@
   <h3 class="toc-title">文章目錄</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FRSA"><span class="toc-number">2.</span> <span class="toc-text">FRSA</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">3.</span> <span class="toc-text">結語</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E6%9C%88"><span class="toc-number">1.</span> <span class="toc-text">一月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E6%9C%88"><span class="toc-number">2.</span> <span class="toc-text">二月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E6%9C%88"><span class="toc-number">3.</span> <span class="toc-text">三月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E6%9C%88"><span class="toc-number">4.</span> <span class="toc-text">四月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E6%9C%88"><span class="toc-number">5.</span> <span class="toc-text">五月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E6%9C%88"><span class="toc-number">6.</span> <span class="toc-text">六月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E6%9C%88"><span class="toc-number">7.</span> <span class="toc-text">七月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E6%9C%88"><span class="toc-number">8.</span> <span class="toc-text">八月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E6%9C%88"><span class="toc-number">9.</span> <span class="toc-text">九月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E6%9C%88"><span class="toc-number">10.</span> <span class="toc-text">十月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E6%9C%88"><span class="toc-number">11.</span> <span class="toc-text">十一月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E6%9C%88"><span class="toc-number">12.</span> <span class="toc-text">十二月</span></a></li></ol>
       
   </div>
 </div>
@@ -310,13 +308,13 @@
   
 </aside>
 
-          <section id="main"><article id="post-NHNC-official-writeup/NHNC-official-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-2025年度回顧/2025年度回顧" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2025-07-07T09:26:11.000Z" itemprop="datePublished">2025-07-07</time>
-    <time style="display: none;" id="post-update-time">2025-07-23</time>
+    <time datetime="2025-12-31T11:44:38.000Z" itemprop="datePublished">2025-12-31</time>
+    <time style="display: none;" id="post-update-time">2025-12-31</time>
   </span>
 </div>
 
@@ -329,23 +327,44 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目<br>經過多天的思考就出了一題神奇的題目<br>希望大家會喜歡 :)<br><del>應該不會太通靈吧</del></p>
-<h1 id="FRSA"><a href="#FRSA" class="headerlink" title="FRSA"></a>FRSA</h1><p>先看個 source code</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = getStrongPrime(<span class="number">1024</span>)</span><br><span class="line">q = getStrongPrime(<span class="number">1024</span>)</span><br><span class="line">n = p*q</span><br><span class="line">e = randrange(<span class="number">2</span>**<span class="number">512</span>,<span class="number">2</span>**<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">plaintext = <span class="built_in">open</span>(<span class="string">&#x27;wonderful_work.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read().lower()</span><br><span class="line">arr = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> plaintext:</span><br><span class="line">	arr.append(<span class="built_in">pow</span>(<span class="built_in">ord</span>(i),e,n))</span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;so_wonderful_work.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>).write(<span class="built_in">str</span>(n)+<span class="string">&quot;\n&quot;</span>+<span class="built_in">str</span>(arr))</span><br></pre></td></tr></table></figure>
-
-<p>output 太長就先不丟</p>
-<p>仔細看了看就會發現沒有給 <code>e</code><br>那要怎麼辦呢?</p>
-<p>這裡是把 <code>wonderful_work.txt</code> 裡的每個字母轉成 ASCII 值然後做加密<br>但用的 <code>e</code> 跟 <code>n</code> 都是一樣的<br>所以可以取到 26 個不同的值<br>那麼就可以做頻率分析了(記得把輸出的 <code>n</code> 去掉)</p>
-<p><strong>exploit</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ciphertext too long put it here</span></span><br><span class="line">freq = <span class="built_in">sorted</span>(<span class="built_in">set</span>(ciphertext), key = ciphertext.count)[::-<span class="number">1</span>]</span><br><span class="line">engfreq = <span class="string">&#x27; ETAOINSHRDLCUMWFGYPBVKJXQZ&#x27;</span></span><br><span class="line"><span class="built_in">map</span> = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i,text <span class="keyword">in</span> <span class="built_in">enumerate</span>(freq):</span><br><span class="line">	<span class="keyword">if</span> i &lt;= <span class="number">26</span>:</span><br><span class="line">		<span class="built_in">map</span>[text] = engfreq[i]</span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> ciphertext:</span><br><span class="line">	<span class="keyword">if</span> c <span class="keyword">in</span> <span class="built_in">map</span>.keys():</span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">map</span>[c],end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>解出來可能會像</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AN WENEROU VHUTOARE IOAD TSAI ANODVERTENTUG O CEP CUAEI YATE O CEP TALEI NEVER MON DETOAN O SERHAM WOUUHKANW SHRIE TSAI IEELI TH LOBE O UHT HC IENIE RAWST TSE JFAMB YRHPN CHQ ZFLKI HVER TSE UOXG DHW DELHMRATFI HNME IOAD TSAI DHNT UHHB OT EVERGHNE PATS DAITRFIT YFT YE CARL OND CARL TSAI AI ANDEED O PAIE IOGANW TSEN PSOT YOWESHT HNME IOAD O CARL YEUAEC MON LOBE TSE SEORT HC TSE ITRHNW CARL OND TSEG ORE LHRE DETERLANED OUTSHFWS TSAI IENTENME AI ISHRT AT LOBEI LE TSANB OYHFT AT PSG DHEI NSNMTSAIAIRIOONDCREJFENMGONOUGIAI SOKKEN</span><br></pre></td></tr></table></figure>
-<p>拿去重新排幾次<br>可以丟到像這樣的網站 <a target="_blank" rel="noopener" href="https://quipqiup.com/">https://quipqiup.com/</a><br>接著就會拿到</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IN GENERAL VOLTAIRE SAID THIS INADVERTENTLY A FEW FLIES BITE A FEW TIMES NEVER CAN DETAIN A HEROIC GALLOPING HORSE THIS SEEMS TO MAKE A LOT OF SENSE RIGHT THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG DEMOCRITUS ONCE SAID THIS DONT LOOK AT EVERYONE WITH DISTRUST BUT BE FIRM AND FIRM THIS IS INDEED A WISE SAYING THEN WHAT BAGEHOT ONCE SAID A FIRM BELIEF CAN MAKE THE HEART OF THE STRONG FIRM AND THEY ARE MORE DETERMINED ALTHOUGH THIS SENTENCE IS SHORT IT MAKES ME THINK ABOUT IT WHY DOES NHNCTHISISRSAANDFREQUENCYANALYSIS HAPPEN</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>flag : NHNC{THIS_IS_RSA_AND_FREQUENCY_ANALYSIS}</p>
+        <p>大家好像都在寫回顧，那我也跟著寫一下好了<br>這篇就當作整理今年發生什麼事好了，<del>雖然我快忘光了</del></p>
+<h1 id="一月"><a href="#一月" class="headerlink" title="一月"></a>一月</h1><blockquote>
+<p>打完金盾暫時想不到要幹嘛，所以就去買了 OSCP，寒假剛好可以爆讀，然後沒過多久就發現 EOF 被刷了</p>
 </blockquote>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>這題解題人數沒有我想像中的多<br><del>當初設定這題是baby題</del><br>看到後台的 submission 感覺大家玩得挺開心的<br>還有半夜3點看大家搶排名第一蠻有趣的</p>
+<h1 id="二月"><a href="#二月" class="headerlink" title="二月"></a>二月</h1><blockquote>
+<p>這個月好像沒有特別的事情? 有點忘記了</p>
+</blockquote>
+<h1 id="三月"><a href="#三月" class="headerlink" title="三月"></a>三月</h1><blockquote>
+<p>去 SITCON 幫忙 THJCC 擺攤 + 聽了一些神奇的議程，順便認識了一些人，像是 kohiro 跟 chilin<br>後來還去打了 CX330 的 spell-whisperer 然後不小心就破台了，也因為這樣認識 CX</p>
+</blockquote>
+<h1 id="四月"><a href="#四月" class="headerlink" title="四月"></a>四月</h1><blockquote>
+<p>THJCC 開打，這次是跟 THJCC winter 一樣當驗題，感覺一年比一年難，是我的錯覺嗎<br>還有狗哥辛苦你扛下一半的題目了，我下次會好好驗你的題的，<del>雖然你接下來跑去當了參賽者</del></p>
+</blockquote>
+<h1 id="五月"><a href="#五月" class="headerlink" title="五月"></a>五月</h1><blockquote>
+<p>第一次打 AIS3 pre-exam，結果 crypto 題被搞一個大的，最後拿了 49 名，</p>
+</blockquote>
+<h1 id="六月"><a href="#六月" class="headerlink" title="六月"></a>六月</h1><blockquote>
+<p>被 kohiro 拉進了 ICEDTEA，結果剛加入就被檸檬茶抓去出 NO HACK NO CTF 的題目，於是就出了一題爛爛的 crypto<br>這個時候 OSCP 也讀得差不多，開始瘋狂打靶機</p>
+</blockquote>
+<h1 id="七月"><a href="#七月" class="headerlink" title="七月"></a>七月</h1><blockquote>
+<p>NO HACK NO CTF 開打，讓我第一次體驗到不睡覺一整天是什麼優質的感受<br>接著考過了 OSCP，<del>第二次體驗不睡覺一整天</del>，結果考完就要跑回去暑輔<br>然後又跑去了 AIS3，認識很多人，<del>然後又又又又體驗不睡覺一整天</del>，這個月真的好忙</p>
+</blockquote>
+<h1 id="八月"><a href="#八月" class="headerlink" title="八月"></a>八月</h1><blockquote>
+<p>在 AIS3 順利跟 dk CX330 DD 拿到了最佳專題，第一次參加能有這樣的成績運氣蠻好的<br>接下來就是很抽象的 AIS3 junior，謝謝 pwn2ooown 直升機帶我在台南吃喝玩樂，還有隊友讓我躺分<br>另外，還有跟 ICEDTEA 一起打了 HITCON CTF 進了交流賽，超超超超超開心<br>HITCON 也有很多有趣的議程，雖然某些聽不太懂，但還算有收穫</p>
+</blockquote>
+<h1 id="九月"><a href="#九月" class="headerlink" title="九月"></a>九月</h1><blockquote>
+<p>開始特選地獄，繳交備審跟做備審真的好痛苦 嗚嗚嗚</p>
+</blockquote>
+<h1 id="十月"><a href="#十月" class="headerlink" title="十月"></a>十月</h1><blockquote>
+<p>跟 ICEDTEA 一起打了 HITCON 交流賽，第一次體驗到這種需要過夜的 CTF<br>交流賽也有很多神奇的畫面，像是 p23 把 grissia 當 agent 來用，現在去看直播記錄檔應該還有?<br>最後拿了第三名，愛 ICEDTEA<br>還有去打了金盾初賽，然後受到了抽獎抽到了就沒辦法進決賽的詛咒，快快樂樂被刷<br>這個月還有超好玩的 osu-gaming CTF，沒想到我的音遊知識竟然能派上用場</p>
+</blockquote>
+<h1 id="十一月"><a href="#十一月" class="headerlink" title="十一月"></a>十一月</h1><blockquote>
+<p>各種特選被刷，讓我狠狠感受到了什麼叫做坐牢<br>幸好我在這個月玩到了世界上最好玩的遊戲 <a target="_blank" rel="noopener" href="https://store.steampowered.com/app/3101040/_/">魔法少女的魔女審判</a> 讓我度過這段時間</p>
+</blockquote>
+<h1 id="十二月"><a href="#十二月" class="headerlink" title="十二月"></a>十二月</h1><blockquote>
+<p>在 EOF 初賽跟 lemontea, zk, yuto 成功晉級決賽，雖然我因為要段考 + 考 OSWP 沒有提供多少輸出<br>成功在 maimai 拿到萬四的 rating，看來一年半砸下去的 4500 沒有白費<br>清大拿了備三，拜託讓我上</p>
+</blockquote>
+<p>今年的事情應該就這樣了吧，是一個事情說多不多說少不少的一年，但還算蠻充實的，希望明年能繼續打 CTF</p>
 
       
     </div>
@@ -359,39 +378,23 @@
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/write-up/" rel="tag">write-up</a></li></ul>
-
 
     </footer>
   </div>
   
   <nav id="article-nav" data-aos="fade-up">
     
-      
-      <div class="article-nav-link-wrap article-nav-link-left">
-        
-          <img data-src="https://jackoha.github.io/images/OSCP_plus_certified.png" data-sizes="auto" alt="關於我從零滲透基礎到OSCP的心路歷程" class="lazyload">
-        
-        <a href="/2025/07/22/OSCP/index/"></a>
-        <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">
-          
-            關於我從零滲透基礎到OSCP的心路歷程
-          
-        </h3>
-      </div>
-    
     
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        <img data-src="https://jackoha.github.io/images/spell-whisper.png" data-sizes="auto" alt="Spell-Whisperer_Writeup" class="lazyload">
+        <img data-src="https://jackoha.github.io/images/AIS3_team.png" data-sizes="auto" alt="AIS3 的各種大小事" class="lazyload">
       
-      <a href="/2025/04/12/Spell-Whisperer-Writeup/index/"></a>
+      <a href="/2025/08/04/AIS3-2025/AIS3-2025/"></a>
       <div class="article-nav-caption">後一篇</div>
       <h3 class="article-nav-title">
         
-          Spell-Whisperer_Writeup
+          AIS3 的各種大小事
         
       </h3>
     </div>
@@ -500,7 +503,7 @@
   <h3 class="toc-title">文章目錄</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FRSA"><span class="toc-number">2.</span> <span class="toc-text">FRSA</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">3.</span> <span class="toc-text">結語</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E6%9C%88"><span class="toc-number">1.</span> <span class="toc-text">一月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E6%9C%88"><span class="toc-number">2.</span> <span class="toc-text">二月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E6%9C%88"><span class="toc-number">3.</span> <span class="toc-text">三月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E6%9C%88"><span class="toc-number">4.</span> <span class="toc-text">四月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E6%9C%88"><span class="toc-number">5.</span> <span class="toc-text">五月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E6%9C%88"><span class="toc-number">6.</span> <span class="toc-text">六月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E6%9C%88"><span class="toc-number">7.</span> <span class="toc-text">七月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E6%9C%88"><span class="toc-number">8.</span> <span class="toc-text">八月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E6%9C%88"><span class="toc-number">9.</span> <span class="toc-text">九月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E6%9C%88"><span class="toc-number">10.</span> <span class="toc-text">十月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E6%9C%88"><span class="toc-number">11.</span> <span class="toc-text">十一月</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E6%9C%88"><span class="toc-number">12.</span> <span class="toc-text">十二月</span></a></li></ol>
       
   </div>
 </div>
@@ -657,14 +660,14 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Jackoha",
-          title: "NHNC 2025 official writeup",
-          url: "http://example.com/2025/07/07/NHNC-official-writeup/NHNC-official-writeup/",
+          title: "2025年度回顧",
+          url: "http://example.com/2025/12/31/2025%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/2025%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/",
           excerpt: "",
           description: "",
-          stripContent: "前言再加入 ICEDTEA 的第一天 LemonTea 總召就叫我來搞 NHNC 的題目經過多天的思考就出了一題神奇的題目希望大家會喜歡 :)應該不會太通靈吧 FRSA先看個 source code 12345678910111213from Crypto.Util.number import *from random import *p = getStrongPrime(1024)q = getStrongPrime(1024)n = p*qe = randrange(2**512,2**10",
-          date: "Mon Jul 07 2025 17:26:11 GMT+0800",
-          updated: "Wed Jul 23 2025 01:16:12 GMT+0800",
-          cover: "https://jackoha.github.io/images/NHNC.png",
+          stripContent: "大家好像都在寫回顧，那我也跟著寫一下好了這篇就當作整理今年發生什麼事好了，雖然我快忘光了 一月 打完金盾暫時想不到要幹嘛，所以就去買了 OSCP，寒假剛好可以爆讀，然後沒過多久就發現 EOF 被刷了  二月 這個月好像沒有特別的事情? 有點忘記了  三月 去 SITCON 幫忙 THJCC 擺攤 + 聽了一些神奇的議程，順便認識了一些人，像是 kohiro 跟 chilin後來還去打了 CX330 的 spell-whisperer 然後不小心就破台了，也因為這樣認識 CX  四月 THJCC ",
+          date: "Wed Dec 31 2025 19:44:38 GMT+0800",
+          updated: "Wed Dec 31 2025 23:01:21 GMT+0800",
+          cover: "https://jackoha.github.io/images/manosoba.png",
         };
       </script>
        
