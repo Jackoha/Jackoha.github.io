@@ -1,0 +1,1131 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-TW"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本部落格所有文章除特別聲明外，均採用 BY-NC-SA 授權協議。轉載請註明出處！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    pwn.college - 從零開始打 ARM PWN |
+    
+    Jackoha&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="前言其實原本要先丟一篇 HTB 的但是 github 好死不死因為某些原因誤 ban 了我的帳號讓我 blog 消失一整個星期所以我就想說先弄其他東西好了在看 pwn.college 有什麼 module 的時候剛好看到這個就來玩一玩ㄌ level-1先從如何寫 ARM architecture 的 asm 開始ㄅ 1234567hacker@intro-to-arm~level1:~&#x2F;Deskt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwn.college - 從零開始打 ARM PWN">
+<meta property="og:url" content="http://example.com/2026/04/24/pwn-college-%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B%E6%89%93-ARM-PWN/pwn-college-%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B%E6%89%93-ARM-PWN/index.html">
+<meta property="og:site_name" content="Jackoha&#39;s Blog">
+<meta property="og:description" content="前言其實原本要先丟一篇 HTB 的但是 github 好死不死因為某些原因誤 ban 了我的帳號讓我 blog 消失一整個星期所以我就想說先弄其他東西好了在看 pwn.college 有什麼 module 的時候剛好看到這個就來玩一玩ㄌ level-1先從如何寫 ARM architecture 的 asm 開始ㄅ 1234567hacker@intro-to-arm~level1:~&#x2F;Deskt">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2026-04-24T10:02:18.000Z">
+<meta property="article:modified_time" content="2026-04-24T10:07:47.640Z">
+<meta property="article:author" content="Jackoha">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="write-up">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css" integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">少女祈禱中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+<div id="heatmap-tooltip"></div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">首頁</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">歸檔</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">關於</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">友鏈</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img  fetchpriority="high" src="https://jackoha.github.io/images/pwn_college.png" alt="pwn.college - 從零開始打 ARM PWN">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">pwn.college - 從零開始打 ARM PWN</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-1"><span class="toc-number">2.</span> <span class="toc-text">level-1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-2"><span class="toc-number">3.</span> <span class="toc-text">level-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-3"><span class="toc-number">4.</span> <span class="toc-text">level-3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-4"><span class="toc-number">5.</span> <span class="toc-text">level-4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-5"><span class="toc-number">6.</span> <span class="toc-text">level-5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-6"><span class="toc-number">7.</span> <span class="toc-text">level-6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-7"><span class="toc-number">8.</span> <span class="toc-text">level-7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-8"><span class="toc-number">9.</span> <span class="toc-text">level-8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-9"><span class="toc-number">10.</span> <span class="toc-text">level-9</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-10"><span class="toc-number">11.</span> <span class="toc-text">level-10</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-11"><span class="toc-number">12.</span> <span class="toc-text">level-11</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-12"><span class="toc-number">13.</span> <span class="toc-text">level-12</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-13"><span class="toc-number">14.</span> <span class="toc-text">level-13</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-14"><span class="toc-number">15.</span> <span class="toc-text">level-14</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-15"><span class="toc-number">16.</span> <span class="toc-text">level-15</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">17.</span> <span class="toc-text">結語</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">8</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">10</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-pwn-college-從零開始打-ARM-PWN/pwn-college-從零開始打-ARM-PWN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2026-04-24T10:02:18.000Z" itemprop="datePublished">2026-04-24</time>
+    <time style="display: none;" id="post-update-time">2026-04-24</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>其實原本要先丟一篇 HTB 的<br>但是 github 好死不死因為某些原因誤 ban 了我的帳號<br>讓我 blog 消失一整個星期<br>所以我就想說先弄其他東西好了<br>在看 pwn.college 有什麼 module 的時候剛好看到這個就來玩一玩ㄌ</p>
+<h1 id="level-1"><a href="#level-1" class="headerlink" title="level-1"></a>level-1</h1><p>先從如何寫 ARM architecture 的 asm 開始ㄅ</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level1:~/Desktop/arm_arch/level1$ /challenge/run</span><br><span class="line">Similar to amd64, the mov instruction can be used.  However, literal values must be prefixed with the <span class="comment"># symbol!</span></span><br><span class="line">Please <span class="built_in">set</span> the following:</span><br><span class="line"></span><br><span class="line">X1 = 0x1337</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>要在值前面加一個 # 號</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov x1, #0x1337</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-2"><a href="#level-2" class="headerlink" title="level-2"></a>level-2</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level2:~/Desktop/arm_arch/level2$ /challenge/run</span><br><span class="line">aarch64 registers are 64 bits <span class="keyword">in</span> size, but the mov instruction only works with 16 bit immediate values.</span><br><span class="line">In order to move larger literal values, the mov and movk instructions are needed.</span><br><span class="line"></span><br><span class="line">movk loads a value into the destination register with a specific bitshift, retaining all other bytes</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line">        mov x0, <span class="comment">#0x3700</span></span><br><span class="line">        movk x0, <span class="comment">#0x13, lsl 16</span></span><br><span class="line"></span><br><span class="line">Results <span class="keyword">in</span> X0 containing the value 0x133700</span><br><span class="line"></span><br><span class="line">Please <span class="built_in">set</span> the following:</span><br><span class="line"></span><br><span class="line">        X1 = 0xdeadbeef</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>mov 只能處理 16 bit<br>所以我們可以用 movk 把他推過去</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov x1, #0xbeef</span></span><br><span class="line"><span class="string">    movk x1, #0xdead, lsl 16</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-3"><a href="#level-3" class="headerlink" title="level-3"></a>level-3</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Arithmetic instructions take three arguments</span><br><span class="line">Example:</span><br><span class="line">         add x0, x1, x2</span><br><span class="line"></span><br><span class="line">This example is equivalent to x0 = x1 + x2</span><br><span class="line"></span><br><span class="line">Please compute the following:</span><br><span class="line"></span><br><span class="line">f(x) = mx + b, <span class="built_in">where</span>:</span><br><span class="line">        m = X0</span><br><span class="line">        x = X1</span><br><span class="line">        b = X2</span><br><span class="line"></span><br><span class="line">Place the value into X0 given the above.</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        X0 = 0xb93</span><br><span class="line">        X1 = 0x12f</span><br><span class="line">        X2 = 0x23ff</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>這邊就跟原本寫法沒差多少</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mul x1, x0, x1</span></span><br><span class="line"><span class="string">    add x0, x1, x2</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-4"><a href="#level-4" class="headerlink" title="level-4"></a>level-4</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">aarch64 instructions can have multiple arguments and perform multiple actions..Please compute the following:</span><br><span class="line">f(x) = mx + b, <span class="built_in">where</span>:</span><br><span class="line">        m = X0</span><br><span class="line">        x = X1</span><br><span class="line">        b = X2</span><br><span class="line">Place the value into X0 given the above.</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">X0 = 0x93e</span><br><span class="line">X1 = 0x2162</span><br><span class="line">X2 = 0x7de</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Constraints:</span><br><span class="line">        - You may submit only one instruction.</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>這裡只能用一個 instruction<br>可以用 madd</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    madd x0, x0, x1, x2</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-5"><a href="#level-5" class="headerlink" title="level-5"></a>level-5</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Modulo <span class="keyword">in</span> aarch64 cannot be <span class="keyword">done</span> <span class="keyword">in</span> a single instruction!</span><br><span class="line"></span><br><span class="line">Please compute the following:</span><br><span class="line">        X0 % X1</span><br><span class="line"></span><br><span class="line">Place the value <span class="keyword">in</span> X0.</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        X0 = 0x37a2228d</span><br><span class="line">        X1 = 0xf</span><br><span class="line"></span><br><span class="line">Constraints:</span><br><span class="line">        - You may submit 2 instructions.</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>簡單模運算?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    udiv x2, x0, x1</span></span><br><span class="line"><span class="string">    msub x0, x2, x1, x0</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-6"><a href="#level-6" class="headerlink" title="level-6"></a>level-6</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level6:~$ /challenge/run</span><br><span class="line">Shifting <span class="keyword">in</span> assembly is another interesting concept! aarch64 allows you to <span class="string">&#x27;shift&#x27;</span></span><br><span class="line">bits around <span class="keyword">in</span> a register. Take <span class="keyword">for</span> instance, X1. For the sake of this example</span><br><span class="line">say X1 only can store 8 bits (it normally stores 64). The value <span class="keyword">in</span> X1 is:</span><br><span class="line">X1 = 10001010</span><br><span class="line">We <span class="keyword">if</span> we <span class="built_in">shift</span> the value once to the left:</span><br><span class="line">lsl X1, X1, 1</span><br><span class="line">The new value is:</span><br><span class="line">X1 = 00010100</span><br><span class="line">As you can see, everything shifted to the left and the highest bit fell off and</span><br><span class="line">a new 0 was added to the right side. You can use this to <span class="keyword">do</span> special things to</span><br><span class="line">the bits you care about. It also has the <span class="built_in">nice</span> side affect of doing quick multiplication,</span><br><span class="line">division, and possibly modulo.</span><br><span class="line"></span><br><span class="line">Here are the important instructions:</span><br><span class="line">        lsl reg1, reg1, reg2       &lt;=&gt;     Shift reg1 left by the amount <span class="keyword">in</span> reg2</span><br><span class="line">        lsr reg1, reg1, reg2       &lt;=&gt;     Shift reg1 right by the amount <span class="keyword">in</span> reg2</span><br><span class="line"></span><br><span class="line">Note: all <span class="string">&#x27;regX&#x27;</span> can be replaced by a constant or memory location</span><br><span class="line"></span><br><span class="line">Using only the following instructions:</span><br><span class="line">        lsl, lsr</span><br><span class="line"></span><br><span class="line">Please perform the following:</span><br><span class="line">        Set X0 to the 4th least significant byte of X0</span><br><span class="line"></span><br><span class="line">i.e.</span><br><span class="line">        X1 = | B7 | B6 | B5 | B4 | B3 | B2 | B1 | B0 |</span><br><span class="line">        Set X0 to the value of B3</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        X0 = 0x85e87f66a306fd7b</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>要留 B3 的 value 那就讓其他部分變成 0 就好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    lsl x0, x0, #32</span></span><br><span class="line"><span class="string">    lsr x0, x0, #56</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-7"><a href="#level-7" class="headerlink" title="level-7"></a>level-7</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level7:~/Desktop/arm_arch/level7$ /challenge/run</span><br><span class="line">Memory addresses cannot be directly accessed <span class="keyword">in</span> aarch64.  Only registers can be operated on.</span><br><span class="line">Values must be loaded from memory to a register with ldr and written back to memory via str</span><br><span class="line">For example, to increment a value located at memory address 0x1337, the following instructions</span><br><span class="line">would be needed:</span><br><span class="line"></span><br><span class="line">        mov x1, <span class="comment">#0x1337</span></span><br><span class="line">        ldr x0, [x1]</span><br><span class="line">        add x0, x0, <span class="comment">#1</span></span><br><span class="line">        str x0, [x1]</span><br><span class="line"></span><br><span class="line">Locations memory addresses can also be offset from.  Example:</span><br><span class="line">        mov x1, <span class="comment">#0x4000</span></span><br><span class="line">        ldr x0, [x1, <span class="comment">#8]</span></span><br><span class="line"></span><br><span class="line">Would load 8 bytes stored at 0x4008 into x0</span><br><span class="line"></span><br><span class="line">Please perform the following:</span><br><span class="line">        1. Place the value stored at 0x133740004000 into X0</span><br><span class="line">        2. Place the value stored at 0x133740004008 into X1</span><br><span class="line">        3. Add these values and store the result at address 0x133740004010</span><br><span class="line">Make sure:</span><br><span class="line">        - The value <span class="keyword">in</span> X0 is the original value stored at 0x133740004000</span><br><span class="line">        - The value <span class="keyword">in</span> X1 is the original value stored at 0x133740004008</span><br><span class="line">        - [0x133740004010] now has the addition<span class="string">&#x27;s result.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">We will now set the following in preparation for your code:</span></span><br><span class="line"><span class="string">        [0x133740004000] = 0x14ce03</span></span><br><span class="line"><span class="string">        [0x133740004008] = 0x10760a</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Please give me your assembly in bytes (up to 0x1000 bytes):</span></span><br></pre></td></tr></table></figure>
+
+<p>按照他講得做就好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    movz x2, #0x4000</span></span><br><span class="line"><span class="string">    movk x2, #0x4000, lsl #16</span></span><br><span class="line"><span class="string">    movk x2, #0x1337, lsl #32</span></span><br><span class="line"><span class="string">    ldr x0, [x2]</span></span><br><span class="line"><span class="string">    ldr x1, [x2, #8]</span></span><br><span class="line"><span class="string">    add x3, x0, x1</span></span><br><span class="line"><span class="string">    str x3, [x2, #16]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-8"><a href="#level-8" class="headerlink" title="level-8"></a>level-8</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level8:~/Desktop/arm_arch/level8$ /challenge/run</span><br><span class="line">Consecutive memory addresses can be loaded and stored <span class="keyword">in</span> a single instruction as a pair!</span><br><span class="line"></span><br><span class="line">Please perform the following:</span><br><span class="line">        1. Place the value stored at 0x404000 to the memory location 0x404010</span><br><span class="line">        2. Place the value stored at 0x404008 to the memory location 0x404018</span><br><span class="line">Constraints:</span><br><span class="line">        - You can only use mov, movk, stp, and ldp</span><br><span class="line">        - You are allowed four instructions</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        [0x404000] = 0x10b1f8</span><br><span class="line">        [0x404008] = 0x10f225</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>這邊只能用 mov, movk, stp, ldp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ldp x1, x2, [x0]</span><br><span class="line"></span><br><span class="line">// 就等於這樣</span><br><span class="line">ldr x1, [x0]</span><br><span class="line">ldr x2, [x0, #8]</span><br></pre></td></tr></table></figure>
+<p>stp 也是同個意思</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov x0, #0x4000</span></span><br><span class="line"><span class="string">    movk x0, #0x40, lsl #16</span></span><br><span class="line"><span class="string">    ldp x1, x2, [x0]</span></span><br><span class="line"><span class="string">    stp x1, x2, [x0, #16]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-9"><a href="#level-9" class="headerlink" title="level-9"></a>level-9</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level9:~/Desktop/arm_arch/level9$ /challenge/run</span><br><span class="line">aarch64 does not have the push/pop instructions to work with the stack.</span><br><span class="line">Instead, you must use ldr and str to retrieve values from the stack.</span><br><span class="line">Fortunately, both ldr and str have the ability to increment the address passed <span class="keyword">in</span> pre/post access.</span><br><span class="line">This feature can be used to perform the same action!</span><br><span class="line"></span><br><span class="line">popping the stack would be of the form:</span><br><span class="line">        ldr x1, [sp], <span class="comment">#16</span></span><br><span class="line"></span><br><span class="line">This loads the value located at the stack pointer into register x1 and <span class="keyword">then</span> adds 16 to the stack.</span><br><span class="line"></span><br><span class="line">Pushing to the stack would be of the form</span><br><span class="line">        str x1, [sp, <span class="comment">#-16]!</span></span><br><span class="line"></span><br><span class="line">This subtracts 16 from the stack pointer and <span class="keyword">then</span> stores the value <span class="keyword">in</span> x1 at sp.</span><br><span class="line">Note: In aarch64, the stack pointer must be 16 byte aligned!  Accessing the stack pointer when it is</span><br><span class="line">not properly aligned will result <span class="keyword">in</span> a fault!</span><br><span class="line"></span><br><span class="line">Note: There is different syntax <span class="keyword">for</span> accessing memory at an offset, pre-indexing, and post-indexing.</span><br><span class="line">All of these forms are used extensively <span class="keyword">in</span> aarch64.</span><br><span class="line"></span><br><span class="line">Please pop 8 QWORDS from the stack, compute their average, and push the result back onto the stack.</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+<p>這邊在講 aarch64 怎麼 pop 跟 push</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    ldp x0, x1, [sp], #16</span></span><br><span class="line"><span class="string">    ldp x2, x3, [sp], #16</span></span><br><span class="line"><span class="string">    ldp x4, x5, [sp], #16</span></span><br><span class="line"><span class="string">    ldp x6, x7, [sp], #16</span></span><br><span class="line"><span class="string">    add x0, x0, x1</span></span><br><span class="line"><span class="string">    add x0, x0, x2</span></span><br><span class="line"><span class="string">    add x0, x0, x3</span></span><br><span class="line"><span class="string">    add x0, x0, x4</span></span><br><span class="line"><span class="string">    add x0, x0, x5</span></span><br><span class="line"><span class="string">    add x0, x0, x6</span></span><br><span class="line"><span class="string">    add x0, x0, x7</span></span><br><span class="line"><span class="string">    lsr x0, x0, #3</span></span><br><span class="line"><span class="string">    str x0, [sp, #-16]!</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-10"><a href="#level-10" class="headerlink" title="level-10"></a>level-10</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level10:~/Desktop/arm_arch/level10$ /challenge/run</span><br><span class="line">Swap values <span class="keyword">in</span> X0 and X1.</span><br><span class="line">Example:</span><br><span class="line">        If starting with: X0 = 2 and X1 = 5</span><br><span class="line">        Then end with:    X0 = 5 and X1 = 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Constraints:</span><br><span class="line">- You may only use two instructions!</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">X0 = 0xd4d57d4</span><br><span class="line">X1 = 0x304dcfb5</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HINT: You have already used the necessary instructions <span class="keyword">in</span> previous levels!</span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+<p>要交換這兩個數值<br>先把 x0,x1 push 進去<br>pop 的時候反著就好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    stp x0, x1, [sp, #-16]!</span></span><br><span class="line"><span class="string">    ldp x1, x0, [sp], #16</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-11"><a href="#level-11" class="headerlink" title="level-11"></a>level-11</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level11:~/Desktop/arm_arch/level11$ /challenge/run</span><br><span class="line">Loops can be created using conditional branch instructions.</span><br><span class="line">The branch instruction <span class="keyword">in</span> aarch64 is b.</span><br><span class="line">To conditionally branch a dot suffix (ex: .gt) is appended resulting <span class="keyword">in</span> b.gt.</span><br><span class="line">This would be equivalent to jg <span class="keyword">in</span> amd64.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Please compute the <span class="built_in">sum</span> of n consecutive quad words, <span class="built_in">where</span>:</span><br><span class="line">        X0 = memory address of the 1st quad word</span><br><span class="line">        X1 = n (amount to loop <span class="keyword">for</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> x0 to the <span class="built_in">sum</span> computed</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        - [0x404318:0x404608] = &#123;n qwords]&#125;</span><br><span class="line">        - X0 = 0x404318</span><br><span class="line">        - X1 = 94</span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+
+<p>這邊在教怎麼寫迴圈</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov x2, x0</span></span><br><span class="line"><span class="string">    mov x0, #0</span></span><br><span class="line"><span class="string">loop:</span></span><br><span class="line"><span class="string">    cmp x1, #0</span></span><br><span class="line"><span class="string">    b.eq end</span></span><br><span class="line"><span class="string">    ldr x3, [x2], #8</span></span><br><span class="line"><span class="string">    add x0, x0, x3</span></span><br><span class="line"><span class="string">    sub x1, x1, #1</span></span><br><span class="line"><span class="string">    b loop</span></span><br><span class="line"><span class="string">end:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="level-12"><a href="#level-12" class="headerlink" title="level-12"></a>level-12</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level12:~/Desktop/arm_arch/level12$ /challenge/run</span><br><span class="line">Loops can be created using conditional branch instructions.</span><br><span class="line">The branch instruction <span class="keyword">in</span> aarch64 is b.</span><br><span class="line">To conditionally branch a dot suffix (ex: .gt) is appended resulting <span class="keyword">in</span> b.gt.</span><br><span class="line">This would be equivalent to jg <span class="keyword">in</span> amd64.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Please compute the <span class="built_in">sum</span> of n consecutive quad words, <span class="built_in">where</span>:</span><br><span class="line">        X0 = memory address of the 1st quad word</span><br><span class="line">        X1 = n (amount to loop <span class="keyword">for</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> x0 to the <span class="built_in">sum</span> computed</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        - [0x404198:0x404398] = &#123;n qwords&#125;</span><br><span class="line">        - X0 = 0x404198</span><br><span class="line">        - X1 = 64</span><br><span class="line"></span><br><span class="line">Constraints:</span><br><span class="line">        - You are allowed six instructions</span><br><span class="line"></span><br><span class="line">Hints:</span><br><span class="line">        - Take advantage of pre/post indexing when possible.</span><br><span class="line">        - Use values <span class="built_in">where</span> they are.</span><br><span class="line">        - Don<span class="string">&#x27;t forget to place the result in x0.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Please give me your assembly in bytes (up to 0x1000 bytes):</span></span><br></pre></td></tr></table></figure>
+<p>跟上一題差不多?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    mov x2, #0</span></span><br><span class="line"><span class="string">loop:</span></span><br><span class="line"><span class="string">    ldr x3, [x0], #8</span></span><br><span class="line"><span class="string">    add x2, x2, x3</span></span><br><span class="line"><span class="string">    subs x1, x1, #1</span></span><br><span class="line"><span class="string">    b.ne loop</span></span><br><span class="line"><span class="string">    mov x0, x2</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="level-13"><a href="#level-13" class="headerlink" title="level-13"></a>level-13</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level13:~/Desktop/arm_arch/level12$ /challenge/run</span><br><span class="line">In this level we will ask you to <span class="keyword">do</span> both a relative jump and an absolute jump. You will <span class="keyword">do</span> a relative</span><br><span class="line">jump first, <span class="keyword">then</span> an absolute one. You will need to fill space <span class="keyword">in</span> your code with something to make this</span><br><span class="line">relative jump possible.</span><br><span class="line"></span><br><span class="line">Using the above knowledge, perform the following:</span><br><span class="line">        1. Make the first instruction <span class="keyword">in</span> your code a jmp</span><br><span class="line">        2. Make that jmp a relative jump to 0x40 bytes from its current position</span><br><span class="line">        3. At 0x40 write the following code:</span><br><span class="line">        4. Place the top value on the stack into register X1</span><br><span class="line">        5. jmp to the absolute address 0x403000</span><br><span class="line"></span><br><span class="line">We will now <span class="built_in">set</span> the following <span class="keyword">in</span> preparation <span class="keyword">for</span> your code:</span><br><span class="line">        - Loading your given gode at: 0x400056</span><br><span class="line">        - (stack) [0x7fffff1ffff8] = 0x6a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Please give me your assembly <span class="keyword">in</span> bytes (up to 0x1000 bytes):</span><br></pre></td></tr></table></figure>
+<p>結合前面學到ㄉ<br>按照他說得做就好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    b jump</span></span><br><span class="line"><span class="string">    .space 60</span></span><br><span class="line"><span class="string">jump:</span></span><br><span class="line"><span class="string">    ldr x1, [sp]</span></span><br><span class="line"><span class="string">    movz x2, #0x3000</span></span><br><span class="line"><span class="string">    movk x2, #0x0040, lsl 16</span></span><br><span class="line"><span class="string">    br x2</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-14"><a href="#level-14" class="headerlink" title="level-14"></a>level-14</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level14:~$ /challenge/run</span><br><span class="line">Function calls <span class="keyword">in</span> aarch64 are <span class="keyword">done</span> with the branch and <span class="built_in">link</span> instruction bl.</span><br><span class="line">The <span class="built_in">functions</span> <span class="built_in">return</span> value is stored <span class="keyword">in</span> register x0.</span><br><span class="line"></span><br><span class="line">The bl instruction:</span><br><span class="line">        - does a PC relative jump the specified location</span><br><span class="line">        - and stores the <span class="built_in">return</span> address <span class="keyword">in</span> the <span class="built_in">link</span> register lr (aka x30)</span><br><span class="line"></span><br><span class="line">It is the <span class="built_in">caller</span><span class="string">&#x27;s responsibility to store the existing lr value frame pointer</span></span><br><span class="line"><span class="string">and any needed values in x0 - x15.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Registers x16 - x18 will be discussed later.</span></span><br><span class="line"><span class="string">Registers x19 - x28 are callee saved.</span></span><br><span class="line"><span class="string">The saved return address is stored in a special link register lr (aka x30).</span></span><br><span class="line"><span class="string">The saved frame pointer is stored in a special frame register fr (aka x29).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Given the role of x29 and x30, it is common to see a function prologue similar to:</span></span><br><span class="line"><span class="string">        stp x29, x30, [sp, #-48]!</span></span><br><span class="line"><span class="string">        mov x29, sp</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Here, the stack pointer is decremented to create a function frame and lr and fr are</span></span><br><span class="line"><span class="string">stored on the stack.  The last instruction shown sets the frame pointer.  Note that</span></span><br><span class="line"><span class="string">the stack pointer and frame pointer are equal in this case.  local variables are stored</span></span><br><span class="line"><span class="string">ABOVE the frame pointer.  The stack pointer may decrement further when passing arguments</span></span><br><span class="line"><span class="string">via the stack or for dynamic stack allocations (alloca).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Similarly, a function epilogue consists of:</span></span><br><span class="line"><span class="string">        ldp x29, x30, [sp], #48</span></span><br><span class="line"><span class="string">        ret</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">which restores lr, fr and the stack before returning.</span></span><br><span class="line"><span class="string">Write a function that calculates an average.</span></span><br><span class="line"><span class="string">Your assembly should be a FUNCTION that will be called, and is expected to return.</span></span><br><span class="line"><span class="string">Your function should be of the form calc_avg(ptr, count)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">- ptr is the start of the array</span></span><br><span class="line"><span class="string">- count is the number of 64 bit numbers in the array</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Please give me your assembly in bytes (up to 0x1000 bytes):</span></span><br></pre></td></tr></table></figure>
+<p>在講 saved return address 跟 saved frame pointer 位置<br>跟常見寫法<br>這題也是按照要求就好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    stp x29, x30, [sp, #-16]!</span></span><br><span class="line"><span class="string">    mov x29, sp</span></span><br><span class="line"><span class="string">    mov x2, #0</span></span><br><span class="line"><span class="string">    mov x3, x1</span></span><br><span class="line"><span class="string">    cbz x1, end</span></span><br><span class="line"><span class="string">loop:</span></span><br><span class="line"><span class="string">    ldr x4, [x0], #8</span></span><br><span class="line"><span class="string">    add x2, x2, x4</span></span><br><span class="line"><span class="string">    subs x3, x3, #1</span></span><br><span class="line"><span class="string">    b.ne loop</span></span><br><span class="line"><span class="string">end:</span></span><br><span class="line"><span class="string">    udiv x0, x2, x1</span></span><br><span class="line"><span class="string">    ldp x29, x30, [sp], #16</span></span><br><span class="line"><span class="string">    ret</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level-15"><a href="#level-15" class="headerlink" title="level-15"></a>level-15</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">hacker@intro-to-arm~level15:~/Desktop/arm_arch/level15$ /challenge/run</span><br><span class="line">Function calls <span class="keyword">in</span> aarch64 are <span class="keyword">done</span> with the branch and <span class="built_in">link</span> instruction bl.</span><br><span class="line">The <span class="built_in">functions</span> <span class="built_in">return</span> value is stored <span class="keyword">in</span> register x0.</span><br><span class="line"></span><br><span class="line">The bl instruction:</span><br><span class="line">        - does a PC relative jump the specified location</span><br><span class="line">        - and stores the <span class="built_in">return</span> address <span class="keyword">in</span> the <span class="built_in">link</span> register lr (aka x30)</span><br><span class="line"></span><br><span class="line">It is the <span class="built_in">caller</span><span class="string">&#x27;s responsibility to store the existing lr value frame pointer</span></span><br><span class="line"><span class="string">and any needed values in x0 - x15.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Registers x16 - x18 will be discussed later.</span></span><br><span class="line"><span class="string">Registers x19 - x28 are callee saved.</span></span><br><span class="line"><span class="string">The saved return address is stored in a special link register lr (aka x30).</span></span><br><span class="line"><span class="string">The saved frame pointer is stored in a special frame register fr (aka x29).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Given the role of x29 and x30, it is common to see a function prologue similar to:</span></span><br><span class="line"><span class="string">        stp x29, x30, [sp, #-48]!</span></span><br><span class="line"><span class="string">        mov x29, sp</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Here, the stack pointer is decremented to create a function frame and lr and fr are</span></span><br><span class="line"><span class="string">stored on the stack.  The last instruction shown sets the frame pointer.  Note that</span></span><br><span class="line"><span class="string">the stack pointer and frame pointer are equal in this case.  local variables are stored</span></span><br><span class="line"><span class="string">ABOVE the frame pointer.  The stack pointer may decrement further when passing arguments</span></span><br><span class="line"><span class="string">via the stack or for dynamic stack allocations (alloca).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Similarly, a function epilogue consists of:</span></span><br><span class="line"><span class="string">        ldp x29, x30, [sp], #48</span></span><br><span class="line"><span class="string">        ret</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">which restores lr, fr and the stack before returning.</span></span><br><span class="line"><span class="string">Write a recursive fibonacci function.</span></span><br><span class="line"><span class="string">Your assembly should be a FUNCTION that will be called, and is expected to return.</span></span><br><span class="line"><span class="string">Your function should be of the form fib(pos)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">- pos is position in the fibonacci sequence</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Please give me your assembly in bytes (up to 0x1000 bytes):</span></span><br></pre></td></tr></table></figure>
+<p>這邊就是遞迴都會看到的費波那契</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;aarch64&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;/challenge/run&quot;</span>)</span><br><span class="line"></span><br><span class="line">asm_bytes = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">fib:</span></span><br><span class="line"><span class="string">    stp x29, x30, [sp, #-32]!</span></span><br><span class="line"><span class="string">    mov x29, sp</span></span><br><span class="line"><span class="string">    stp x19, x20, [sp, #16]</span></span><br><span class="line"><span class="string">    cmp x0, #1</span></span><br><span class="line"><span class="string">    b.le end</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    mov x19, x0</span></span><br><span class="line"><span class="string">    sub x0, x19, #1</span></span><br><span class="line"><span class="string">    bl fib</span></span><br><span class="line"><span class="string">    mov x20, x0</span></span><br><span class="line"><span class="string">    sub x0, x19, #2</span></span><br><span class="line"><span class="string">    bl fib</span></span><br><span class="line"><span class="string">    add x0, x0, x20</span></span><br><span class="line"><span class="string">end:</span></span><br><span class="line"><span class="string">    ldp x19, x20, [sp, #16]</span></span><br><span class="line"><span class="string">    ldp x29, x30, [sp], #32</span></span><br><span class="line"><span class="string">    ret</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> process(<span class="string">&#x27;/challenge/run&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">  p.send(asm_bytes)</span><br><span class="line">  p.stdin.close()</span><br><span class="line">  p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>下一篇應該是 ARM 上的 ROP<br>DEBUG 好難 :(((</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/write-up/" rel="tag">write-up</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="https://cryptohack.org/static/img/main.png" data-sizes="auto" alt="從入門 crypto 到只會 cry 的 Cryptohack 破台之旅" class="lazyload">
+      
+      <a href="/2026/04/08/How-I-solved-all-CryptoHack-challenges/How-I-solved-all-CryptoHack-challenges/"></a>
+      <div class="article-nav-caption">後一篇</div>
+      <h3 class="article-nav-title">
+        
+          從入門 crypto 到只會 cry 的 Cryptohack 破台之旅
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+  <section id="comments" data-aos="fade-up">
+    <div class="comment-header">
+      
+      
+        
+      
+      <h2 class="comment-title">說些什麼吧！</h2>
+      <div class="comment-selector">
+        <div class="comment-selector-wrap">
+            
+            <div class="selector-item" data-selector="giscus">
+              <span>giscus</span>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    <div class="comment-content">
+      
+        <div class="comment giscus-comment" data-aos="fade-up"
+          id="giscus-comment">
+        </div>
+      
+    </div>
+  </section>
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2026
+      
+      <span class="footer-info-sep rotate"></span>
+      Jackoha
+    </div>
+    
+      <div>
+        基於&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        15.3k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        01:01
+      </div>
+    
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">總訪問量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">總訪客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-1"><span class="toc-number">2.</span> <span class="toc-text">level-1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-2"><span class="toc-number">3.</span> <span class="toc-text">level-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-3"><span class="toc-number">4.</span> <span class="toc-text">level-3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-4"><span class="toc-number">5.</span> <span class="toc-text">level-4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-5"><span class="toc-number">6.</span> <span class="toc-text">level-5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-6"><span class="toc-number">7.</span> <span class="toc-text">level-6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-7"><span class="toc-number">8.</span> <span class="toc-text">level-7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-8"><span class="toc-number">9.</span> <span class="toc-text">level-8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-9"><span class="toc-number">10.</span> <span class="toc-text">level-9</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-10"><span class="toc-number">11.</span> <span class="toc-text">level-10</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-11"><span class="toc-number">12.</span> <span class="toc-text">level-11</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-12"><span class="toc-number">13.</span> <span class="toc-text">level-12</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-13"><span class="toc-number">14.</span> <span class="toc-text">level-13</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-14"><span class="toc-number">15.</span> <span class="toc-text">level-14</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#level-15"><span class="toc-number">16.</span> <span class="toc-text">level-15</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">17.</span> <span class="toc-text">結語</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/jackoha.webp" data-sizes="auto" alt="Jackoha" class="lazyload">
+  <div class="sidebar-author-name">Jackoha</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">8</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">10</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Jackoha",
+          title: "pwn.college - 從零開始打 ARM PWN",
+          url: "http://example.com/2026/04/24/pwn-college-%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B%E6%89%93-ARM-PWN/pwn-college-%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B%E6%89%93-ARM-PWN/",
+          excerpt: "",
+          description: "",
+          stripContent: "前言其實原本要先丟一篇 HTB 的但是 github 好死不死因為某些原因誤 ban 了我的帳號讓我 blog 消失一整個星期所以我就想說先弄其他東西好了在看 pwn.college 有什麼 module 的時候剛好看到這個就來玩一玩ㄌ level-1先從如何寫 ARM architecture 的 asm 開始ㄅ 1234567hacker@intro-to-arm~level1:~/Desktop/arm_arch/level1$ /challenge/runSimilar to amd64",
+          date: "Fri Apr 24 2026 18:02:18 GMT+0800",
+          updated: "Fri Apr 24 2026 18:07:47 GMT+0800",
+          cover: "https://jackoha.github.io/images/pwn_college.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+<script data-pjax>
+  var loadScript = (src, integrity) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (integrity) script.integrity = integrity;
+    script.crossOrigin = 'anonymous';
+    return script;
+  };
+
+  var commentConfigKeys = ['valine', 'waline', 'twikoo', 'gitalk', 'giscus'];
+  var commentConfig = {
+    valine: {
+      enable: false,
+      load: () => {
+        const container = document.querySelector('.valine-comment');
+        if (!container) return;
+        container.style.display = 'block';
+
+        const script = loadScript(
+          'https://npm.webcache.cn/valine@1.5.1/dist/Valine.min.js',
+          'sha384-3ma91AExDeMAZ1rjTjaP8V2A2obQE+s5ltKRwYlwdpArz9xVbp0tF3b0VV2ACNPn'
+        );
+        script.onload = () => {
+          var GUEST_INFO = ['nick', 'mail', 'link'];
+          var guest_info = 'nick,mail,link'.split(',').filter((item) => {
+            return GUEST_INFO.indexOf(item) > -1
+          });
+          var recordIP = JSON.parse('true');
+          var highlight = JSON.parse('true');
+          var visitor = JSON.parse('false');
+          var serverURLs = undefined;
+
+          if (window.Valine) {
+            new Valine({
+              el: '.valine-comment',
+              appId: "",
+              appKey: "",
+              placeholder: "Just go go",
+              pageSize: '10',
+              avatar: 'mp',
+              lang: document.documentElement.lang || 'en',
+              recordIP: recordIP,
+              highlight: highlight,
+              visitor: visitor,
+              requiredFields: guest_info,
+              path: window.location.pathname,
+              serverURLs
+            });
+          }
+        };
+        document.head.appendChild(script);
+      }
+    },
+    waline: {
+      enable: false,
+      load: async () => {
+        const container = document.querySelector('.waline-comment');
+        if (!container) return;
+        container.style.display = 'block';
+
+        let walineInit;
+        const walineCdn = 'https://npm.webcache.cn/@waline/client@2.15.8/dist/waline.mjs';
+        const walineIntegrity = 'sha384-9sbqJjrfGjbkI6/PI4nU/MvBfEmkkPC4YK9I4zBeMIf1CVCZdCMH/KinBEAZII/5';
+
+        const module = await safeImport(walineCdn, walineIntegrity);
+        walineInit = module.init;
+
+        window.walineInstance = walineInit({
+          el: '.waline-comment',
+          serverURL: '',
+          lang: document.documentElement.lang || 'en',
+          locale: {},
+          emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+          meta: ["nick","mail","link"],
+          requiredMeta: ["nick","mail"],
+          wordLimit: JSON.parse('0'),
+          comment: true,
+          pageSize: JSON.parse('10'),
+          dark: 'html[data-theme="dark"]',
+          pageview: JSON.parse('true'),
+        });
+      }
+    },
+    twikoo: {
+      enable: false,
+      load: () => {
+        const container = document.querySelector('.twikoo-comment');
+        if (!container) return;
+        container.style.display = 'block';
+
+        const script = loadScript(
+          'https://npm.webcache.cn/twikoo@1.6.44/dist/twikoo.all.min.js',
+          'sha384-kwWLC0HjeZZnVPqCJ1AncI8tsk+kQqF9TbAmCclcc9Z0hGkfgHRzeQZxmdmZhE0K'
+        );
+
+        script.onload = () => {
+          if (window.twikoo) {
+            twikoo.init({
+              envId: '',
+              el: '.twikoo-comment',
+              region: '',
+              lang: document.documentElement.lang || 'en',
+            });
+
+            twikoo.getCommentsCount({
+              envId: '',
+              region: '',
+              urls: [
+                '/about/index.html'
+              ],
+              includeReply: false
+            }).then((res) => {
+              _$('.twikoo-comment-count').innerText = res[0].count;
+            }).catch((err) => {
+              console.error(err);
+            });
+          }
+        } 
+        document.head.appendChild(script);
+      }
+    },
+    gitalk: {
+      enable: false,
+      load: () => {
+        const container = document.querySelector('.gitalk-comment');
+        if (!container) return;
+        container.style.display = 'block';
+
+        const script = loadScript(
+          'https://npm.webcache.cn/gitalk@1.8.0/dist/gitalk.min.js',
+          'sha384-kspnZUWBoSWwoJHa0hBCXYbHGbhvU/lcEH5O8eVbSDhbPwsiVUTp/aGX/z/5EuMA'
+        );
+
+        script.onload = () => {
+          if (false) {
+            const md5Script = loadScript(
+              'https://npm.webcache.cn/blueimp-md5@2.19.0/js/md5.min.js',
+              'sha384-JmVtRz6RWiXnA14QbIOJzPuU3MidULOpBP66deeLLyyoF4Tr/gZlbkHkL6vTthxH'
+            );
+            md5Script.onload = initGitalk;
+            document.head.appendChild(md5Script);
+          } else {
+            initGitalk();
+          }
+        }
+        document.head.appendChild(script);
+
+        function initGitalk() {
+          var gitalkId = location.pathname;
+          var gitalk = new Gitalk({
+            clientID: '',
+            clientSecret: '',
+            repo: '',
+            owner: '',
+            admin: null,
+            id: gitalkId,
+            distractionFreeMode: false,
+            language: document.documentElement.lang || 'en',
+          })
+          gitalk.render('gitalk-comment');
+        }
+      }
+    },
+    giscus: {
+      enable: true,
+      load: () => {
+        const container = document.querySelector('.giscus-comment');
+        if (!container) return;
+        container.style.display = 'block';
+
+        // 删除可能已存在的 giscus 脚本和 iframe
+        const existingScript = container.querySelector('script[src*="giscus.app/client.js"]');
+        if (existingScript) existingScript.remove();
+        const existingFrame = document.querySelector('iframe.giscus-frame');
+        if (existingFrame) existingFrame.remove();
+
+        const giscusScript = document.createElement('script');
+        const domMode = document.documentElement.getAttribute("data-theme");
+
+        const docLang = document.documentElement.lang || 'en';
+        const langBase = docLang.split('-')[0];
+        const supportedLangs = ['ar', 'be', 'bg', 'ca', 'cs', 'da', 'de', 'en', 
+        'eo', 'es', 'eu', 'fa', 'fr', 'gr', 'hbs', 'he', 'hu', 'id', 'it', 'ja', 
+        'kh', 'ko', 'nl', 'pl', 'pt', 'ro', 'ru', 'th', 'tr', 'uk', 'uz', 'vi', 'zh-CN', 'zh-HK', 'zh-TW'];
+        const giscusLang = supportedLangs.includes(docLang) ? docLang : supportedLangs.includes(langBase) ? langBase : 'en';
+
+        giscusScript.src = 'https://giscus.app/client.js';
+        giscusScript.setAttribute('data-repo', 'Jackoha/Jackoha.github.io');
+        giscusScript.setAttribute('data-repo-id', 'R_kgDOOQQHhg');
+        giscusScript.setAttribute('data-category', 'General'); 
+        giscusScript.setAttribute('data-category-id', 'DIC_kwDOOQQHhs4Cuau0');
+        giscusScript.setAttribute('data-mapping', '0');
+        giscusScript.setAttribute('data-strict', '0');
+        giscusScript.setAttribute('data-reactions-enabled', '1');
+        giscusScript.setAttribute('data-emit-metadata', '0');
+        giscusScript.setAttribute('data-input-position', 'bottom');
+        giscusScript.setAttribute('data-theme', domMode === 'dark' ? 'dark' : 'light');
+        giscusScript.setAttribute('data-lang', giscusLang);
+        giscusScript.setAttribute('crossorigin', 'anonymous');
+        giscusScript.async = true;
+        container.appendChild(giscusScript);
+        document.body.addEventListener('light-theme-set', () => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: 'light' } } }, 'https://giscus.app');
+        });
+        document.body.addEventListener('dark-theme-set', () => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: 'dark' } } }, 'https://giscus.app');
+        });
+      }
+    }
+  }
+  commentConfig.enable = commentConfigKeys.some(key => commentConfig[key].enable);
+
+  var defaultComment = '';
+  if (commentConfig.enable) {
+    // 1. 首先检查localStorage中是否有保存的评论类型
+    var savedCommentType = localStorage.getItem('commentType');
+    
+    // 2. 如果localStorage中有值且对应的评论系统可用，就使用它
+    if (savedCommentType) {
+      if (commentConfig[savedCommentType]?.enable) {
+        defaultComment = savedCommentType;
+      }
+    }
+    
+    // 3. 如果localStorage无效，检查配置的默认评论系统
+    if (!defaultComment) {
+      var configDefault = 'waline';
+      if (commentConfig[configDefault]?.enable) {
+        defaultComment = configDefault;
+      }
+    }
+    
+    // 4. 如果前两项都无效，按指定顺序找到第一个可用的评论系统
+    if (!defaultComment) {
+      defaultComment = commentConfigKeys.find(sys => commentConfig[sys].enable) || '';
+    }
+  }
+  function loadComments() {
+    if (!commentConfig.enable) return;
+    // 评论组件加载状态跟踪
+    const loadedComments = {
+      valine: false,
+      waline: false,
+      twikoo: false,
+      gitalk: false,
+      giscus: false
+    };
+
+    // 隐藏所有评论容器
+    const hideAllComments = () => {
+      const commentContainers = document.querySelectorAll('.comment');
+      commentContainers.forEach(container => {
+        container.style.display = 'none';
+      });
+    };
+
+    // 按需加载评论系统
+    const loadCommentSystem = (type) => {
+      if (loadedComments[type]) {
+        // 如果已加载，只需显示对应容器
+        document.querySelector(`.${type}-comment`).style.display = 'block';
+        return;
+      }
+
+      // 根据类型加载对应的脚本
+      commentConfig[type]?.load();
+      loadedComments[type] = true;
+    };
+
+    // 评论组件选择器
+    const changeActiveCommentItems = (item) => {
+      const commentItems = document.querySelectorAll('.selector-item');
+      for (let i = 0; i < commentItems.length; i++) {
+        commentItems[i].classList.remove('active');
+      }
+      item.classList.add('active');
+
+      // 获取要加载的评论系统类型
+      const commentType = item.getAttribute('data-selector');
+
+      // 隐藏所有评论系统
+      hideAllComments();
+
+      // 加载选中的评论系统
+      loadCommentSystem(commentType);
+    };
+
+    const commentInit = () => {
+      // 评论组件选择器点击事件
+      const commentItems = document.querySelectorAll('.selector-item');
+      for (let item of commentItems) {
+        item.addEventListener('click', () => {
+          // 保存选择器状态
+          const commentType = item.getAttribute('data-selector');
+          window.localStorage.setItem('commentType', commentType);
+          // 切换选中状态
+          changeActiveCommentItems(item);
+        });
+      }
+
+      // 检查是否需要加载默认评论系统
+      if (defaultComment) {
+        const defaultSelectorItem = document.querySelector(`[data-selector="${defaultComment}"]`);
+        if (!defaultSelectorItem) return;
+        defaultSelectorItem.style.display = 'block';
+        defaultSelectorItem.classList.add('active');
+        loadCommentSystem(defaultComment);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', commentInit);
+    } else {
+      commentInit();
+    }
+  };
+  loadComments();
+</script>
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.9.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
